@@ -2,10 +2,7 @@ package com.tutorial.crud.controller;
 
 import com.tutorial.crud.dto.ClienteDto;
 import com.tutorial.crud.dto.Mensaje;
-import com.tutorial.crud.dto.TipoClienteDto;
 import com.tutorial.crud.entity.Cliente;
-import com.tutorial.crud.entity.PlanPostpago;
-import com.tutorial.crud.entity.Producto;
 import com.tutorial.crud.entity.TipoCliente;
 import com.tutorial.crud.service.ClienteService;
 import com.tutorial.crud.service.PlanPostpagoService;
@@ -50,10 +47,10 @@ public class ClienteController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> createCliente(@RequestBody ClienteDto clienteDto) {
-        TipoCliente tipoCliente = tipoClienteService.findById(clienteDto.getTipoCliente());
-        clienteDto.setTipoCliente(clienteDto.getTipoCliente());
-        PlanPostpago planPostpago = planPostpagoService.findById(clienteDto.getPlanPostpago());
-        clienteDto.setPlanPostpago(clienteDto.getPlanPostpago());
+        /*TipoCliente tipoCliente = tipoClienteService.findById(clienteDto.getTipoCliente());
+        clienteDto.setTipoCliente(clienteDto.getTipoCliente());*/
+        //PlanPostpago planPostpago = planPostpagoService.findById(clienteDto.getPlanPostpago());
+       // clienteDto.setPlanPostpago(clienteDto.getPlanPostpago());
 
         /*if (cliente.getClienteId() == null) {
             // Generar un nuevo id
@@ -67,7 +64,8 @@ public class ClienteController {
             }
             cliente = clienteService.save(cliente);
         }*/
-        Cliente cliente = new Cliente(clienteDto.getNombre(),clienteDto.getApellido(),clienteDto.getDireccion(),clienteDto.getTelefono(),tipoCliente,planPostpago);
+        //Cliente cliente = new Cliente(clienteDto.getNombre(),clienteDto.getApellido(),clienteDto.getDireccion(),clienteDto.getTelefono(),tipoCliente,planPostpago);
+        Cliente cliente = new Cliente(clienteDto.getDni(),clienteDto.getNombre(),clienteDto.getApellido(),clienteDto.getDireccion());
         clienteService.save(cliente);
         return new ResponseEntity<>(new Mensaje("Cliente Creado"), HttpStatus.OK);
         //Cliente createdCliente = clienteService.save(cliente);
@@ -120,21 +118,21 @@ public class ClienteController {
         cliente.setPlanPostpago(planPostpago);*/
 
 
-        PlanPostpago planPostpago = planPostpagoService.findById(cliente.getPlanPostpago().getPlanId());
-        TipoCliente tipoCliente = tipoClienteService.findById(cliente.getTipoCliente().getTipoId());
+       /* PlanPostpago planPostpago = planPostpagoService.findById(cliente.getPlanPostpago().getPlanId());
+        TipoCliente tipoCliente = tipoClienteService.findById(cliente.getTipoCliente().getTipoId());*/
 
         // Verificar si los objetos son nulos antes de acceder a sus propiedades
-        if (planPostpago == null) {
+       /* if (planPostpago == null) {
             // Manejar el caso en que planPostpago sea nulo
             return ResponseEntity.badRequest().build();
-        }
+        }*/
 
-        if (tipoCliente == null) {
+       /* if (tipoCliente == null) {
             // Manejar el caso en que tipoCliente sea nulo
             return ResponseEntity.badRequest().build();
         }
         cliente.setPlanPostpago(planPostpago);
-        cliente.setTipoCliente(tipoCliente);
+        cliente.setTipoCliente(tipoCliente);*/
 
 
         /*Cliente clienteEncontrado = clienteService.findById(id);

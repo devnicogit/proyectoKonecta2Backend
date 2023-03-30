@@ -1,14 +1,14 @@
 package com.tutorial.crud.security.service;
 
-import com.tutorial.crud.security.entity.Usuario;
-import com.tutorial.crud.security.repository.UsuarioRepository;
+//import com.tutorial.crud.security.entity.Usuario;
+//import com.tutorial.crud.security.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Service
+/*@Service
 @Transactional
 public class UsuarioService {
 
@@ -38,4 +38,4 @@ public class UsuarioService {
     public void save(Usuario usuario){
         usuarioRepository.save(usuario);
     }
-}
+}*/

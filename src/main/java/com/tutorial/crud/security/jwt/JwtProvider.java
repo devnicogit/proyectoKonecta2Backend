@@ -3,8 +3,8 @@ package com.tutorial.crud.security.jwt;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
+import com.tutorial.crud.security.entity.AsesorPrincipal;
 import com.tutorial.crud.security.entity.dto.JwtDto;
-import com.tutorial.crud.security.entity.UsuarioPrincipal;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +29,10 @@ public class JwtProvider {
     private int expiration;
 
     public String generateToken(Authentication authentication) {
-        UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
-        List<String> roles = usuarioPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        AsesorPrincipal asesorPrincipal = (AsesorPrincipal) authentication.getPrincipal();
+        List<String> roles = asesorPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         return Jwts.builder()
-                .setSubject(usuarioPrincipal.getUsername())
+                .setSubject(asesorPrincipal.getUsername())
                 .claim("roles", roles)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 180))

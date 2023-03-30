@@ -1,7 +1,7 @@
 package com.tutorial.crud.security.service;
 
-import com.tutorial.crud.security.entity.Usuario;
-import com.tutorial.crud.security.entity.UsuarioPrincipal;
+import com.tutorial.crud.security.entity.Asesor;
+import com.tutorial.crud.security.entity.AsesorPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UsuarioService usuarioService;
+    AsesorService asesorService;
 
     @Override
     public UserDetails loadUserByUsername(String nombreOrEmail) throws UsernameNotFoundException {
-        Usuario usuario = usuarioService.getByNombreUsuarioOrEmail(nombreOrEmail).get();
-        return UsuarioPrincipal.build(usuario);
+        Asesor asesor = asesorService.getByNombreUsuarioOrEmail(nombreOrEmail).get();
+        return AsesorPrincipal.build(asesor);
     }
 }

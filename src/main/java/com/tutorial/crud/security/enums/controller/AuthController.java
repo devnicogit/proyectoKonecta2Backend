@@ -1,15 +1,16 @@
-package com.tutorial.crud.security.controller;
+package com.tutorial.crud.security.enums.controller;
 
 import com.tutorial.crud.dto.Mensaje;
+import com.tutorial.crud.security.entity.Asesor;
 import com.tutorial.crud.security.entity.dto.JwtDto;
 import com.tutorial.crud.security.entity.dto.LoginUsuario;
 import com.tutorial.crud.security.entity.dto.NuevoUsuario;
 import com.tutorial.crud.security.entity.Rol;
-import com.tutorial.crud.security.entity.Usuario;
+//import com.tutorial.crud.security.entity.Usuario;
 import com.tutorial.crud.security.enums.RolNombre;
 import com.tutorial.crud.security.jwt.JwtProvider;
+import com.tutorial.crud.security.service.AsesorService;
 import com.tutorial.crud.security.service.RolService;
-import com.tutorial.crud.security.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +38,11 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    /*@Autowired
+    UsuarioService usuarioService;*/
+
     @Autowired
-    UsuarioService usuarioService;
+    AsesorService asesorService;
 
     @Autowired
     RolService rolService;
@@ -50,20 +54,20 @@ public class AuthController {
     public ResponseEntity<?> nuevo(@Valid @RequestBody NuevoUsuario nuevoUsuario, BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return new ResponseEntity(new Mensaje("campos mal puestos o email inválido"), HttpStatus.BAD_REQUEST);
-        if(usuarioService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        if(usuarioService.existsByEmail(nuevoUsuario.getEmail()))
+        if(asesorService.existsByNombreUsuario(nuevoUsuario.getNombreUsuario()))
+            return new ResponseEntity(new Mensaje("ese nombre de usuario ya existe"), HttpStatus.BAD_REQUEST);
+        if(asesorService.existsByEmail(nuevoUsuario.getEmail()))
             return new ResponseEntity(new Mensaje("ese email ya existe"), HttpStatus.BAD_REQUEST);
-        Usuario usuario =
-                new Usuario(nuevoUsuario.getNombre(), nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
+        Asesor asesor =
+                new Asesor(nuevoUsuario.getNombre(), nuevoUsuario.getApellido(),nuevoUsuario.getNombreUsuario(), nuevoUsuario.getEmail(),
                         passwordEncoder.encode(nuevoUsuario.getPassword()));
         Set<Rol> roles = new HashSet<>();
         roles.add(rolService.getByRolNombre(RolNombre.ROLE_USER).get());
         if(nuevoUsuario.getRoles().contains("admin"))
             roles.add(rolService.getByRolNombre(RolNombre.ROLE_ADMIN).get());
-        usuario.setRoles(roles);
-        usuarioService.save(usuario);
-        return new ResponseEntity(new Mensaje("usuario guardado"), HttpStatus.CREATED);
+        asesor.setRoles(roles);
+        asesorService.save(asesor);
+        return new ResponseEntity(new Mensaje("Asesor guardado"), HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

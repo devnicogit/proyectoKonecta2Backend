@@ -86,22 +86,24 @@ public class ClienteServiceImpl implements ClienteService {
     private ClienteDto convertToDTO(Cliente cliente) {
         ClienteDto clienteDTO = new ClienteDto();
         clienteDTO.setClienteId(cliente.getClienteId());
+        clienteDTO.setDni(cliente.getDni());
         clienteDTO.setNombre(cliente.getNombre());
         clienteDTO.setApellido(cliente.getApellido());
         clienteDTO.setDireccion(cliente.getDireccion());
-        clienteDTO.setTelefono(cliente.getTelefono());
-        clienteDTO.setTipoCliente(cliente.getTipoCliente().getTipoId());
-        clienteDTO.setPlanPostpago(cliente.getPlanPostpago().getPlanId());
+        //clienteDTO.setTelefono(cliente.getTelefono());
+        //clienteDTO.setTipoCliente(cliente.getTipoCliente().getTipoId());
+        //clienteDTO.setPlanPostpago(cliente.getPlanPostpago().getPlanId());
         return clienteDTO;
     }
 
     private Cliente convertToEntity(ClienteDto clienteDTO) {
         Cliente cliente = new Cliente();
         cliente.setClienteId(clienteDTO.getClienteId());
+        cliente.setDni(clienteDTO.getDni());
         cliente.setNombre(clienteDTO.getNombre());
         cliente.setApellido(clienteDTO.getApellido());
         cliente.setDireccion(clienteDTO.getDireccion());
-        cliente.setTelefono(clienteDTO.getTelefono());
+        //cliente.setTelefono(clienteDTO.getTelefono());
         /*TipoClienteDto tipoClienteDTO = null;
         TipoCliente tipoCliente = null;
         if (clienteDTO.getTipoCliente() != null) {
@@ -111,13 +113,13 @@ public class ClienteServiceImpl implements ClienteService {
             tipoCliente.setNombre(tipoClienteDTO.getNombre());
         }*/
 
-        TipoCliente tipoCliente = new TipoCliente();
+        /*TipoCliente tipoCliente = new TipoCliente();
         tipoCliente.setTipoId(clienteDTO.getTipoCliente());
-        cliente.setTipoCliente(tipoCliente);
+        cliente.setTipoCliente(tipoCliente);*/
 
-        PlanPostpago planPostpago = new PlanPostpago();
+        /*PlanPostpago planPostpago = new PlanPostpago();
         planPostpago.setPlanId(clienteDTO.getPlanPostpago());
-        cliente.setPlanPostpago(planPostpago);
+        cliente.setPlanPostpago(planPostpago);*/
 
         return cliente;
     }
@@ -136,14 +138,15 @@ public class ClienteServiceImpl implements ClienteService {
         Optional<Cliente> clienteEncontrado = clienteRepository.findById(id);
         if (clienteEncontrado.isPresent()) {
             Cliente clienteActualizado = clienteEncontrado.get();
+            clienteActualizado.setDni(cliente.getDni());
             clienteActualizado.setNombre(cliente.getNombre());
             clienteActualizado.setApellido(cliente.getApellido());
-            clienteActualizado.setTelefono(cliente.getTelefono());
+            //clienteActualizado.setTelefono(cliente.getTelefono());
             clienteActualizado.setDireccion(cliente.getDireccion());
             /*clienteActualizado.setTipoCliente(clienteActualizado.getTipoCliente());
             clienteActualizado.setPlanPostpago(clienteActualizado.getPlanPostpago());*/
 
-            TipoCliente tipoCliente = cliente.getTipoCliente();
+            /*TipoCliente tipoCliente = cliente.getTipoCliente();
             if (tipoCliente != null) {
                 Optional<TipoCliente> tipoClienteEncontrado = tipoClienteRepository.findById(tipoCliente.getTipoId());
                 if (tipoClienteEncontrado.isPresent()) {
@@ -151,9 +154,9 @@ public class ClienteServiceImpl implements ClienteService {
                 } else {
                     throw new IllegalArgumentException("Tipo de cliente no encontrado");
                 }
-            }
+            }*/
 
-            PlanPostpago plan = cliente.getPlanPostpago();
+            /*PlanPostpago plan = cliente.getPlanPostpago();
             if (plan != null) {
                 Optional<PlanPostpago> planEncontrado = planPostpagoRepository.findById(plan.getPlanId());
                 if (planEncontrado.isPresent()) {
@@ -161,7 +164,7 @@ public class ClienteServiceImpl implements ClienteService {
                 } else {
                     throw new IllegalArgumentException("Plan no encontrado");
                 }
-            }
+            }*/
 
             return clienteRepository.save(clienteActualizado);
         } else {

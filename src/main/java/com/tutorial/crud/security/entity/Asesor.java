@@ -1,53 +1,56 @@
 package com.tutorial.crud.security.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-/*@Entity
-@Table(name = "usuario")
-public class Usuario {
+@Entity
+@Table(name = "asesor")
+public class Asesor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @NotNull
     private String nombre;
+
+    @Column(name = "apellido")
+    private String apellido;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
     @NotNull
     @Column(unique = true)
     private String nombreUsuario;
-    @NotNull
-    private String email;
     @NotNull
     private String password;
     private String tokenPassword;
     @NotNull
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
-    inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @JoinTable(name = "asesor_rol", joinColumns = @JoinColumn(name = "asesor_id"),
+            inverseJoinColumns = @JoinColumn(name = "rol_id"))
     private Set<Rol> roles = new HashSet<>();
 
 
 
-
-    public Usuario() {
+    public Asesor() {
     }
 
 
-    public Usuario(@NotNull String nombre, @NotNull String nombreUsuario, @NotNull String email, @NotNull String password) {
+    public Asesor(@NotNull String nombre, @NotNull String apellido, @NotNull String nombreUsuario, @NotNull String email, @NotNull String password) {
         this.nombre = nombre;
+        this.apellido = apellido;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -98,4 +101,12 @@ public class Usuario {
     public void setRoles(Set<Rol> roles) {
         this.roles = roles;
     }
-}*/
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+}

@@ -1,6 +1,6 @@
 package com.tutorial.crud.security.entity;
 
-/*import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,26 +8,29 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UsuarioPrincipal implements UserDetails {
+public class AsesorPrincipal implements UserDetails {
     private String nombre;
+
+    private String apellido;
     private String nombreUsuario;
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UsuarioPrincipal(String nombre, String nombreUsuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public AsesorPrincipal(String nombre, String apellido, String nombreUsuario, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.nombre = nombre;
+        this.apellido = apellido;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
     }
 
-    public static UsuarioPrincipal build(Usuario usuario){
+    public static AsesorPrincipal build(Asesor asesor){
         List<GrantedAuthority> authorities =
-                usuario.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
-                .getRolNombre().name())).collect(Collectors.toList());
-        return new UsuarioPrincipal(usuario.getNombre(), usuario.getNombreUsuario(), usuario.getEmail(), usuario.getPassword(), authorities);
+                asesor.getRoles().stream().map(rol -> new SimpleGrantedAuthority(rol
+                        .getRolNombre().name())).collect(Collectors.toList());
+        return new AsesorPrincipal(asesor.getNombre(), asesor.getApellido(), asesor.getNombreUsuario(), asesor.getEmail(), asesor.getPassword(), authorities);
     }
 
     @Override
@@ -72,4 +75,9 @@ public class UsuarioPrincipal implements UserDetails {
     public String getEmail() {
         return email;
     }
-}*/
+
+    public String getApellido(){return apellido;}
+
+
+}
+

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+/*@Entity
 @Table(name="asesor")
 public class Asesor {
 
@@ -18,26 +18,27 @@ public class Asesor {
     @Column(name = "apellido")
     private String apellido;
 
-    @Column(name = "direccion")
-    private String direccion;
+    @Column(name = "email", nullable = false)
+    private String email;
 
     @Column(name = "telefono")
     private String telefono;
 
-    @OneToMany(mappedBy = "asesor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrdenMigracion> ventas = new ArrayList<>();
+    @Column(name = "nombre_usuario", nullable = false)
+    private String nombreUsuario;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "token_password", nullable = false)
+    private String tokenPassword;
+
+
 
     public Asesor() {
     }
 
-    public Asesor(Long id, String nombre, String apellido, String direccion, String telefono, List<OrdenMigracion> ventas) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.ventas = ventas;
-    }
+
 
     public Long getId() {
         return id;
@@ -63,13 +64,6 @@ public class Asesor {
         this.apellido = apellido;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
 
     public String getTelefono() {
         return telefono;
@@ -79,11 +73,5 @@ public class Asesor {
         this.telefono = telefono;
     }
 
-    public List<OrdenMigracion> getVentas() {
-        return ventas;
-    }
 
-    public void setVentas(List<OrdenMigracion> ventas) {
-        this.ventas = ventas;
-    }
-}
+}*/

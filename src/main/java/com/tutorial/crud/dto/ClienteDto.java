@@ -13,26 +13,28 @@ public class ClienteDto {
     @NotBlank
     private Long clienteId;
     @NotBlank
+    private String dni;
+    @NotBlank
     private String nombre;
     @NotBlank
     private String apellido;
     @NotBlank
     private String direccion;
-    @NotBlank
-    private String telefono;
+    /*@NotBlank
+    private String telefono;*/
 
-    private Long tipoCliente;
-    private Long planPostpago;
+    private Long tipoCliente ;
+    /*private Long planPostpago;*/
 
     private TipoClienteDto tipoClienteDto;
-    private PlanPostpagoDto planPostpagoDto;
+    /*private PlanPostpagoDto planPostpagoDto;*/
     @NotBlank
     private Set<Float> tipoCliente1 = new HashSet<>();
 
     private Set<TipoClienteDto> tipoCliente2 = new HashSet<>();
-    @NotBlank
+   /* @NotBlank
     private Set<Float> planPostpago1 = new HashSet<>();
-    private Set<PlanPostpagoDto> planPostpago2= new HashSet<>();
+    private Set<PlanPostpagoDto> planPostpago2= new HashSet<>();*/
 
 
 
@@ -42,7 +44,60 @@ public class ClienteDto {
         this.clienteId = clienteId;
     }
 
-    public ClienteDto(Long clienteId, String nombre, String apellido, String direccion, String telefono, Long tipoCliente, Long planPostpago) {
+    public ClienteDto(Long clienteId, String dni, String nombre, String apellido, String direccion, Long tipoCliente, TipoClienteDto tipoClienteDto, Set<Float> tipoCliente1, Set<TipoClienteDto> tipoCliente2) {
+        this.clienteId = clienteId;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.tipoCliente = tipoCliente;
+        this.tipoClienteDto = tipoClienteDto;
+        this.tipoCliente1 = tipoCliente1;
+        this.tipoCliente2 = tipoCliente2;
+    }
+
+    public ClienteDto(Long clienteId, String dni, String nombre, String apellido, String direccion, Long tipoCliente) {
+        this.clienteId = clienteId;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.tipoCliente = tipoCliente;
+    }
+
+    public ClienteDto(String dni, String nombre, String apellido, String direccion, Long tipoCliente) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.tipoCliente = tipoCliente;
+    }
+
+    public ClienteDto(String dni, String nombre, String apellido, String direccion, TipoClienteDto tipoClienteDto) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.tipoClienteDto = tipoClienteDto;
+    }
+
+    /*public ClienteDto(String dni, String nombre, String apellido, String direccion, Set<Float> tipoCliente1) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.tipoCliente1 = tipoCliente1;
+    }*/
+
+    public ClienteDto(String dni, String nombre, String apellido, String direccion, Set<TipoClienteDto> tipoCliente2) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.tipoCliente2 = tipoCliente2;
+    }
+
+    /*public ClienteDto(Long clienteId, String nombre, String apellido, String direccion, String telefono, Long tipoCliente, Long planPostpago) {
         this.clienteId = clienteId;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -50,19 +105,19 @@ public class ClienteDto {
         this.telefono = telefono;
         this.tipoCliente = tipoCliente;
         this.planPostpago = planPostpago;
-    }
+    }*/
 
-    public ClienteDto(String nombre, String apellido, String direccion, String telefono, Long tipoCliente, Long planPostpago) {
+    /*public ClienteDto(String nombre, String apellido, String direccion, String telefono, Long tipoCliente, Long planPostpago) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.telefono = telefono;
         this.tipoCliente = tipoCliente;
         this.planPostpago = planPostpago;
-    }
+    }*/
 
 
-    public ClienteDto(Long clienteId, String nombre, String apellido, String direccion, String telefono, TipoClienteDto tipoClienteDto, PlanPostpagoDto planPostpagoDto) {
+    /*public ClienteDto(Long clienteId, String nombre, String apellido, String direccion, String telefono, TipoClienteDto tipoClienteDto, PlanPostpagoDto planPostpagoDto) {
         this.clienteId = clienteId;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -70,18 +125,18 @@ public class ClienteDto {
         this.telefono = telefono;
         this.tipoClienteDto = tipoClienteDto;
         this.planPostpagoDto = planPostpagoDto;
-    }
+    }*/
 
-    public ClienteDto(String nombre, String apellido, String direccion, String telefono, TipoClienteDto tipoClienteDto, PlanPostpagoDto planPostpagoDto) {
+    /*public ClienteDto(String nombre, String apellido, String direccion, String telefono, TipoClienteDto tipoClienteDto, PlanPostpagoDto planPostpagoDto) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.telefono = telefono;
         this.tipoClienteDto = tipoClienteDto;
         this.planPostpagoDto = planPostpagoDto;
-    }
+    }*/
 
-    public ClienteDto(Cliente cliente) {
+    /*public ClienteDto(Cliente cliente) {
         this.clienteId = cliente.getClienteId();
         this.nombre = cliente.getNombre();
         this.apellido = cliente.getApellido();
@@ -93,7 +148,7 @@ public class ClienteDto {
         if (cliente.getPlanPostpago() != null) {
             this.planPostpago = cliente.getPlanPostpago().getPlanId();
         }
-    }
+    }*/
 
 
 
@@ -130,6 +185,14 @@ public class ClienteDto {
         this.clienteId = clienteId;
     }
 
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -154,13 +217,13 @@ public class ClienteDto {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
+    /*public String getTelefono() {
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
+    }*/
 
     public Long getTipoCliente() {
         return tipoCliente;
@@ -170,13 +233,13 @@ public class ClienteDto {
         this.tipoCliente = tipoCliente;
     }
 
-    public Long getPlanPostpago() {
+    /*public Long getPlanPostpago() {
         return planPostpago;
     }
 
     public void setPlanPostpago(Long planPostpago) {
         this.planPostpago = planPostpago;
-    }
+    }*/
 
     public Set<Float> getTipoCliente1() {
         return tipoCliente1;
@@ -194,7 +257,7 @@ public class ClienteDto {
         this.tipoCliente2 = tipoCliente2;
     }
 
-    public Set<Float> getPlanPostpago1() {
+    /*public Set<Float> getPlanPostpago1() {
         return planPostpago1;
     }
 
@@ -208,7 +271,7 @@ public class ClienteDto {
 
     public void setPlanPostpago2(Set<PlanPostpagoDto> planPostpago2) {
         this.planPostpago2 = planPostpago2;
-    }
+    }*/
 
 
     public TipoClienteDto getTipoClienteDto() {
@@ -219,11 +282,11 @@ public class ClienteDto {
         this.tipoClienteDto = tipoClienteDto;
     }
 
-    public PlanPostpagoDto getPlanPostpagoDto() {
+    /*public PlanPostpagoDto getPlanPostpagoDto() {
         return planPostpagoDto;
     }
 
     public void setPlanPostpagoDto(PlanPostpagoDto planPostpagoDto) {
         this.planPostpagoDto = planPostpagoDto;
-    }
+    }*/
 }

@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tipo_cliente")
@@ -25,14 +27,21 @@ public class TipoCliente implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
+    @ManyToMany(mappedBy = "tipoCliente")
+    private Set<Cliente> cliente = new HashSet<>();
 
-    @OneToMany(mappedBy = "tipoCliente", cascade = CascadeType.ALL, orphanRemoval = true)
+
+
+
+
+
+/*@OneToMany(mappedBy = "tipoCliente", cascade = CascadeType.ALL, orphanRemoval = true)
     //@JsonIgnoreProperties("tipoCliente")
     //@JsonIgnoreProperties("clientes")
     @JsonIgnore
-    private List<Cliente> clientes = new ArrayList<>();
+    private List<Cliente> clientes = new ArrayList<>();*/
 
-    public TipoCliente(Long tipoId, String nombre, List<Cliente> clientes) {
+    /*public TipoCliente(Long tipoId, String nombre, List<Cliente> clientes) {
         this.tipoId = tipoId;
         this.nombre = nombre;
         this.clientes = clientes;
@@ -40,7 +49,7 @@ public class TipoCliente implements Serializable {
 
     public TipoCliente(String nombre){
         this.nombre = nombre;
-    }
+    }*/
 
     /*@JsonCreator
     public TipoCliente(@JsonProperty("tipoId") Long tipoId, @JsonProperty("nombre") String nombre) {
@@ -48,6 +57,20 @@ public class TipoCliente implements Serializable {
         this.nombre = nombre;
     }*/
 
+    public TipoCliente(Long tipoId, String nombre, Set<Cliente> cliente) {
+        this.tipoId = tipoId;
+        this.nombre = nombre;
+        this.cliente = cliente;
+    }
+
+    public TipoCliente(String nombre, Set<Cliente> cliente) {
+        this.nombre = nombre;
+        this.cliente = cliente;
+    }
+
+    public TipoCliente(String nombre) {
+        this.nombre = nombre;
+    }
 
     public TipoCliente(){
 
@@ -69,11 +92,19 @@ public class TipoCliente implements Serializable {
         this.nombre = nombre;
     }
 
-    public List<Cliente> getClientes() {
+    public Set<Cliente> getCliente() {
+        return cliente;
+    }
+
+    public void setClientes(Set<Cliente> cliente) {
+        this.cliente = cliente;
+    }
+
+    /*public List<Cliente> getClientes() {
         return clientes;
     }
 
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
-    }
+    }*/
 }

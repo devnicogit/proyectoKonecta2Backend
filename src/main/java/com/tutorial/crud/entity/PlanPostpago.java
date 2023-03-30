@@ -29,10 +29,10 @@ public class PlanPostpago implements Serializable {
     @Column(name = "costo_mensual")
     private BigDecimal costoMensual;
 
-    @OneToMany(mappedBy = "planPostpago", cascade = CascadeType.ALL, orphanRemoval = true)
+    /*@OneToMany(mappedBy = "planPostpago", cascade = CascadeType.ALL, orphanRemoval = true)
     //@JsonIgnoreProperties("clientes")
     @JsonIgnore
-    private List<Cliente> clientes = new ArrayList<>();
+    private List<Cliente> clientes = new ArrayList<>();*/
 
     public PlanPostpago() {
 
@@ -49,12 +49,12 @@ public class PlanPostpago implements Serializable {
         this.costoMensual = costoMensual;
     }
 
-    public PlanPostpago(Long planId, String nombrePlan, BigDecimal costoMensual, List<Cliente> clientes) {
+    /*public PlanPostpago(Long planId, String nombrePlan, BigDecimal costoMensual, List<Cliente> clientes) {
         this.planId = planId;
         this.nombrePlan = nombrePlan;
         this.costoMensual = costoMensual;
         this.clientes = clientes;
-    }
+    }*/
 
     public Long getPlanId() {
         return planId;
@@ -80,11 +80,11 @@ public class PlanPostpago implements Serializable {
         this.costoMensual = costoMensual;
     }
 
-    public List<Cliente> getClientes() {
+   /* public List<Cliente> getClientes() {
         return clientes;
     }
 
     public void setClientes(List<Cliente> clientes) {
         this.clientes = clientes;
-    }
+    }*/
 }

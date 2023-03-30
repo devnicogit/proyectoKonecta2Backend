@@ -4,8 +4,8 @@ import com.tutorial.crud.dto.Mensaje;
 import com.tutorial.crud.emailpassword.dto.ChangePasswordDTO;
 import com.tutorial.crud.emailpassword.dto.EmailValuesDTO;
 import com.tutorial.crud.emailpassword.service.EmailService;
-import com.tutorial.crud.security.entity.Usuario;
-import com.tutorial.crud.security.service.UsuarioService;
+import com.tutorial.crud.security.entity.Asesor;
+import com.tutorial.crud.security.service.AsesorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -26,8 +26,11 @@ public class EmailController {
     @Autowired
     EmailService emailService;
 
+    /*@Autowired
+    UsuarioService usuarioService;*/
+
     @Autowired
-    UsuarioService usuarioService;
+    AsesorService asesorService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -39,19 +42,19 @@ public class EmailController {
 
     @PostMapping("/send-email")
     public ResponseEntity<?> sendEmailTemplate(@RequestBody EmailValuesDTO dto) {
-        Optional<Usuario> usuarioOpt = usuarioService.getByNombreUsuarioOrEmail(dto.getMailTo());
-        if(!usuarioOpt.isPresent())
-            return new ResponseEntity(new Mensaje("No existe ningún usuario con esas credenciales"), HttpStatus.NOT_FOUND);
-        Usuario usuario = usuarioOpt.get();
+        Optional<Asesor> asesorOpt = asesorService.getByNombreUsuarioOrEmail(dto.getMailTo());
+        if(!asesorOpt.isPresent())
+            return new ResponseEntity(new Mensaje("No existe ningún Asesor con esas credenciales"), HttpStatus.NOT_FOUND);
+        Asesor asesor = asesorOpt.get();
         dto.setMailFrom(mailFrom);
-        dto.setMailTo(usuario.getEmail());
+        dto.setMailTo(asesor.getEmail());
         dto.setSubject(subject);
-        dto.setUserName(usuario.getNombreUsuario());
+        dto.setUserName(asesor.getNombreUsuario());
         UUID uuid = UUID.randomUUID();
         String tokenPassword = uuid.toString();
         dto.setTokenPassword(tokenPassword);
-        usuario.setTokenPassword(tokenPassword);
-        usuarioService.save(usuario);
+        asesor.setTokenPassword(tokenPassword);
+        asesorService.save(asesor);
         emailService.sendEmail(dto);
         return new ResponseEntity(new Mensaje("Te hemos enviado un correo"), HttpStatus.OK);
     }
@@ -62,14 +65,14 @@ public class EmailController {
             return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
         if(!dto.getPassword().equals(dto.getConfirmPassword()))
             return new ResponseEntity(new Mensaje("Las contraseñas no coinciden"), HttpStatus.BAD_REQUEST);
-        Optional<Usuario> usuarioOpt = usuarioService.getByTokenPassword(dto.getTokenPassword());
-        if(!usuarioOpt.isPresent())
-            return new ResponseEntity(new Mensaje("No existe ningún usuario con esas credenciales"), HttpStatus.NOT_FOUND);
-        Usuario usuario = usuarioOpt.get();
+        Optional<Asesor> asesorOpt = asesorService.getByTokenPassword(dto.getTokenPassword());
+        if(!asesorOpt.isPresent())
+            return new ResponseEntity(new Mensaje("No existe ningún asesor con esas credenciales"), HttpStatus.NOT_FOUND);
+        Asesor asesor = asesorOpt.get();
         String newPassword = passwordEncoder.encode(dto.getPassword());
-        usuario.setPassword(newPassword);
-        usuario.setTokenPassword(null);
-        usuarioService.save(usuario);
+        asesor.setPassword(newPassword);
+        asesor.setTokenPassword(null);
+        asesorService.save(asesor);
         return new ResponseEntity(new Mensaje("Contraseña actualizada"), HttpStatus.OK);
     }
 

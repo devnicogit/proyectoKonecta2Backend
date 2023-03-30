@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "cliente")
@@ -17,6 +21,9 @@ public class Cliente implements Serializable {
     @Column(name = "cliente_id")
     private Long clienteId;
 
+    @Column(name = "dni", unique = true, nullable = false)
+    private String dni;
+
     @Column(name = "nombre")
     private String nombre;
 
@@ -26,28 +33,37 @@ public class Cliente implements Serializable {
     @Column(name = "direccion")
     private String direccion;
 
-    @Column(name = "telefono")
-    private String telefono;
+    @ManyToMany
+    @JoinTable(
+            name = "cliente_tipo_cliente",
+            joinColumns = @JoinColumn(name = "cliente_id"),
+            inverseJoinColumns = @JoinColumn(name = "tipo_id"))
+    private Set<TipoCliente> tipoCliente = new HashSet<>();
+
+
+
+    /*@Column(name = "telefono")
+    private String telefono;*/
 
     //@JsonIgnoreProperties("tipoId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    /*@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_id", nullable = false)
     //@JsonIdentityInfo(scope = TipoCliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="tipoId")
     //@JsonIdentityReference(alwaysAsId = false)
     //@JsonProperty("tipoCliente")
-    private TipoCliente tipoCliente;
+    private TipoCliente tipoCliente;*/
 
     //@JsonIgnoreProperties("planId")
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "plan_id", nullable = false)
+    /*@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "plan_id", nullable = false)*/
     /*@JsonIdentityInfo(scope = PlanPostpago.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="planId")
     @JsonIdentityReference(alwaysAsId = false)*/
     //@JsonProperty("planPostpago")
-    private PlanPostpago planPostpago;
+    //private PlanPostpago planPostpago;
 
 
-    public Cliente(Long clienteId, String nombre, String apellido, String direccion, String telefono, TipoCliente tipoCliente, PlanPostpago planPostpago) {
+    /*public Cliente(Long clienteId, String nombre, String apellido, String direccion, String telefono, TipoCliente tipoCliente, PlanPostpago planPostpago) {
         this.clienteId = clienteId;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -55,16 +71,16 @@ public class Cliente implements Serializable {
         this.telefono = telefono;
         this.tipoCliente = tipoCliente;
         this.planPostpago = planPostpago;
-    }
+    }*/
 
-    public Cliente(String nombre, String apellido, String direccion, String telefono, TipoCliente tipoCliente, PlanPostpago planPostpago) {
+    /*public Cliente(String nombre, String apellido, String direccion, String telefono, TipoCliente tipoCliente, PlanPostpago planPostpago) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
         this.telefono = telefono;
         this.tipoCliente = tipoCliente;
         this.planPostpago = planPostpago;
-    }
+    }*/
 
     /*public Cliente(Long clienteId, String nombre, String apellido, String direccion, String telefono) {
         this.clienteId = clienteId;
@@ -73,6 +89,38 @@ public class Cliente implements Serializable {
         this.direccion = direccion;
         this.telefono = telefono;
     }*/
+
+    public Cliente(Long clienteId, String dni, String nombre, String apellido, String direccion) {
+        this.clienteId = clienteId;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+    }
+
+    public Cliente(String dni, String nombre, String apellido, String direccion) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+    }
+
+    public Cliente(Long clienteId, String dni, String nombre, String apellido, String direccion, Set<TipoCliente> tipoCliente) {
+        this.clienteId = clienteId;
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.tipoCliente = tipoCliente;
+    }
+
+    public Cliente(String dni, String nombre, String apellido, String direccion, Set<TipoCliente> tipoCliente) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.tipoCliente = tipoCliente;
+    }
 
     public Cliente(){
 
@@ -110,7 +158,23 @@ public class Cliente implements Serializable {
         this.direccion = direccion;
     }
 
-    public String getTelefono() {
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public Set<TipoCliente> getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoClientes(Set<TipoCliente> tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+
+    /*public String getTelefono() {
         return telefono;
     }
 
@@ -132,5 +196,7 @@ public class Cliente implements Serializable {
 
     public void setPlanPostpago(PlanPostpago planPostpago) {
         this.planPostpago = planPostpago;
-    }
+    }*/
+
+
 }

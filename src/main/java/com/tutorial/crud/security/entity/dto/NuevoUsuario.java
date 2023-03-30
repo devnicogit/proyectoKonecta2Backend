@@ -8,6 +8,9 @@ import java.util.Set;
 public class NuevoUsuario {
     @NotBlank
     private String nombre;
+
+    @NotBlank
+    private String apellido;
     @NotBlank
     private String nombreUsuario;
     @Email
@@ -22,6 +25,14 @@ public class NuevoUsuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
     public String getNombreUsuario() {
