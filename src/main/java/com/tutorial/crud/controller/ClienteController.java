@@ -2,20 +2,25 @@ package com.tutorial.crud.controller;
 
 import com.tutorial.crud.dto.ClienteDto;
 import com.tutorial.crud.dto.Mensaje;
-import com.tutorial.crud.entity.Cliente;
-import com.tutorial.crud.entity.TipoCliente;
+import com.tutorial.crud.repository.TipoClienteRepository;
+import com.tutorial.crud.swagger.entity.Cliente;
 import com.tutorial.crud.service.ClienteService;
 import com.tutorial.crud.service.PlanPostpagoService;
 import com.tutorial.crud.service.TipoClienteService;
+import com.tutorial.crud.swagger.entity.TipoCliente;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/cliente")
@@ -31,6 +36,9 @@ public class ClienteController {
     @Autowired
     private PlanPostpagoService planPostpagoService;
 
+    @Autowired
+    private TipoClienteRepository tipoClienteRepository;
+
     @ApiOperation("Muestra una lista de productos")
     @GetMapping("/lista")
     public ResponseEntity<List<Cliente>> list(){
@@ -45,116 +53,45 @@ public class ClienteController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/create")
-    public ResponseEntity<?> createCliente(@RequestBody ClienteDto clienteDto) {
-        /*TipoCliente tipoCliente = tipoClienteService.findById(clienteDto.getTipoCliente());
-        clienteDto.setTipoCliente(clienteDto.getTipoCliente());*/
-        //PlanPostpago planPostpago = planPostpagoService.findById(clienteDto.getPlanPostpago());
-       // clienteDto.setPlanPostpago(clienteDto.getPlanPostpago());
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> createCliente(@Valid @RequestBody ClienteDto clienteDto,  BindingResult bindingResult) {
 
-        /*if (cliente.getClienteId() == null) {
-            // Generar un nuevo id
-            //cliente.setClienteId(0);
-            cliente = clienteService.save(cliente);
-        } else {
-            // Actualizar un registro existente
-            Cliente existingCliente = clienteService.findById(cliente.getClienteId());
-            if (existingCliente == null) {
-                return ResponseEntity.notFound().build();
-            }
-            cliente = clienteService.save(cliente);
-        }*/
-        //Cliente cliente = new Cliente(clienteDto.getNombre(),clienteDto.getApellido(),clienteDto.getDireccion(),clienteDto.getTelefono(),tipoCliente,planPostpago);
-        Cliente cliente = new Cliente(clienteDto.getDni(),clienteDto.getNombre(),clienteDto.getApellido(),clienteDto.getDireccion());
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
+        }
+
+        Cliente cliente = new Cliente(clienteDto.getDni(),clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDireccion());
+        Set<TipoCliente> tiposCliente = new HashSet<>();
+        for (Long tipoClienteId : clienteDto.getTipoClienteIds()) {
+            TipoCliente tipoCliente = tipoClienteRepository.findById(tipoClienteId)
+                    .orElseThrow(() -> new RuntimeException("No se encontró el tipo de cliente con el ID " + tipoClienteId));
+            tiposCliente.add(tipoCliente);
+        }
+        cliente.setTipoClientes(tiposCliente);
         clienteService.save(cliente);
-        return new ResponseEntity<>(new Mensaje("Cliente Creado"), HttpStatus.OK);
-        //Cliente createdCliente = clienteService.save(cliente);
 
-        //return ResponseEntity.status(HttpStatus.CREATED).body(createdCliente);
+        return new ResponseEntity(new Mensaje("Cliente guardado"), HttpStatus.CREATED);
 
     }
 
-    /*@PostMapping("/create")
-    public ResponseEntity<ClienteDto> createCliente(@Valid @RequestBody Cliente cliente) {
-        TipoCliente tipoCliente = tipoClienteService.findById(cliente.getTipoCliente().getTipoId());
-        cliente.setTipoCliente(tipoCliente);
-        PlanPostpago planPostpago = planPostpagoService.findById(cliente.getPlanPostpago().getPlanId());
-        cliente.setPlanPostpago(planPostpago);
-        ClienteDto clienteDto = new ClienteDto(cliente);
-        ClienteDto createdCliente = clienteService.save(clienteDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCliente);
-    }*/
-
-    /*@PostMapping("/create")
-    public ResponseEntity<ClienteDto> createCliente(@RequestBody ClienteDto clienteDTO) {
-        TipoCliente tipoClienteDto = tipoClienteService.findById(clienteDTO.getTipoClienteDto().getTipoId());
-        ClienteDto createdCliente = clienteService.createCliente(clienteDTO);
-        return new ResponseEntity<ClienteDto>(createdCliente, HttpStatus.CREATED);
-    }*/
 
 
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @Valid @RequestBody Cliente cliente) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping(value = "/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateCliente(@PathVariable Long id, @Valid @RequestBody ClienteDto clienteDto, BindingResult bindingResult) {
 
-
-
-       /* TipoCliente tipoCliente = null;
-        PlanPostpago planPostpago = null;
-
-        if(cliente.getTipoCliente() != null) {
-            tipoCliente = tipoClienteService.findById(cliente.getTipoCliente().getTipoId());
-            if(tipoCliente == null) {
-                throw new IllegalArgumentException("Tipo de cliente no encontrado");
-            }
-        }
-        if(cliente.getPlanPostpago() != null) {
-            planPostpago = planPostpagoService.findById(cliente.getPlanPostpago().getPlanId());
-            if(planPostpago == null) {
-                throw new IllegalArgumentException("Plan no encontrado");
-            }
-        }
-        cliente.setTipoCliente(tipoCliente);
-        cliente.setPlanPostpago(planPostpago);*/
-
-
-       /* PlanPostpago planPostpago = planPostpagoService.findById(cliente.getPlanPostpago().getPlanId());
-        TipoCliente tipoCliente = tipoClienteService.findById(cliente.getTipoCliente().getTipoId());*/
-
-        // Verificar si los objetos son nulos antes de acceder a sus propiedades
-       /* if (planPostpago == null) {
-            // Manejar el caso en que planPostpago sea nulo
-            return ResponseEntity.badRequest().build();
-        }*/
-
-       /* if (tipoCliente == null) {
-            // Manejar el caso en que tipoCliente sea nulo
-            return ResponseEntity.badRequest().build();
-        }
-        cliente.setPlanPostpago(planPostpago);
-        cliente.setTipoCliente(tipoCliente);*/
-
-
-        /*Cliente clienteEncontrado = clienteService.findById(id);
-
-        if (cliente.getTipoCliente() != null) {
-            TipoCliente tipoCliente = tipoClienteService.findById(cliente.getTipoCliente().getTipoId());
-            clienteEncontrado.setTipoCliente(tipoCliente);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
         }
 
-        if (cliente.getPlanPostpago() != null) {
-            PlanPostpago planPostpago = planPostpagoService.findById(cliente.getPlanPostpago().getPlanId());
-            clienteEncontrado.setPlanPostpago(planPostpago);
-        }
+        ClienteDto clienteDto1 = new ClienteDto(clienteDto.getDni(), clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDireccion());
+        clienteDto1.setTipoClienteIds(clienteDto.getTipoClienteIds());
 
-        clienteEncontrado.setNombre(cliente.getNombre());
-        clienteEncontrado.setApellido(cliente.getApellido());
-        clienteEncontrado.setTelefono(cliente.getTelefono());
-        clienteEncontrado.setDireccion(cliente.getDireccion());*/
+        clienteService.update(id, clienteDto1);
 
+        return new ResponseEntity(new Mensaje("Cliente actualizado"), HttpStatus.OK);
 
-        Cliente updatedCliente = clienteService.update(id, cliente);
-        return ResponseEntity.ok(updatedCliente);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -163,9 +100,4 @@ public class ClienteController {
         return ResponseEntity.noContent().build();
     }
 
-    /*@GetMapping("/{id}/ventas")
-    public ResponseEntity<List<Venta>> getVentasByClienteId(@PathVariable Long id) {
-        List<Venta> ventas = clienteService.getVentasByClienteId(id);
-        return ResponseEntity.ok(ventas);
-    }*/
 }

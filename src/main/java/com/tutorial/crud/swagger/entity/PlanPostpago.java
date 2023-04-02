@@ -1,4 +1,4 @@
-package com.tutorial.crud.entity;
+package com.tutorial.crud.swagger.entity;
 
 import com.fasterxml.jackson.annotation.*;
 

@@ -1,7 +1,6 @@
 package com.tutorial.crud.controller;
 
-import com.tutorial.crud.entity.Cliente;
-import com.tutorial.crud.entity.TipoCliente;
+import com.tutorial.crud.swagger.entity.TipoCliente;
 import com.tutorial.crud.service.TipoClienteService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

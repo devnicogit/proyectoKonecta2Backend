@@ -1,16 +1,18 @@
 package com.tutorial.crud.dto;
 
-import com.tutorial.crud.entity.Cliente;
-import com.tutorial.crud.entity.PlanPostpago;
+import com.tutorial.crud.security.entity.Rol;
+import com.tutorial.crud.security.entity.dto.RolDto;
+import com.tutorial.crud.security.enums.RolNombre;
+import com.tutorial.crud.swagger.entity.TipoCliente;
 
 import javax.validation.constraints.NotBlank;
-import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ClienteDto {
 
-    @NotBlank
+
     private Long clienteId;
     @NotBlank
     private String dni;
@@ -20,22 +22,12 @@ public class ClienteDto {
     private String apellido;
     @NotBlank
     private String direccion;
-    /*@NotBlank
-    private String telefono;*/
 
-    private Long tipoCliente ;
-    /*private Long planPostpago;*/
 
-    private TipoClienteDto tipoClienteDto;
-    /*private PlanPostpagoDto planPostpagoDto;*/
-    @NotBlank
-    private Set<Float> tipoCliente1 = new HashSet<>();
+    private Set<TipoClienteDto> tipoCliente = new HashSet<>();
+    private Set<TipoCliente> tipoCliente1 = new HashSet<>();
 
-    private Set<TipoClienteDto> tipoCliente2 = new HashSet<>();
-   /* @NotBlank
-    private Set<Float> planPostpago1 = new HashSet<>();
-    private Set<PlanPostpagoDto> planPostpago2= new HashSet<>();*/
-
+    private Set<Long> tipoClienteIds;
 
 
     public ClienteDto() {
@@ -44,138 +36,12 @@ public class ClienteDto {
         this.clienteId = clienteId;
     }
 
-    public ClienteDto(Long clienteId, String dni, String nombre, String apellido, String direccion, Long tipoCliente, TipoClienteDto tipoClienteDto, Set<Float> tipoCliente1, Set<TipoClienteDto> tipoCliente2) {
-        this.clienteId = clienteId;
+    public ClienteDto(String dni, String nombre, String apellido, String direccion) {
         this.dni = dni;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
-        this.tipoCliente = tipoCliente;
-        this.tipoClienteDto = tipoClienteDto;
-        this.tipoCliente1 = tipoCliente1;
-        this.tipoCliente2 = tipoCliente2;
     }
-
-    public ClienteDto(Long clienteId, String dni, String nombre, String apellido, String direccion, Long tipoCliente) {
-        this.clienteId = clienteId;
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.tipoCliente = tipoCliente;
-    }
-
-    public ClienteDto(String dni, String nombre, String apellido, String direccion, Long tipoCliente) {
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.tipoCliente = tipoCliente;
-    }
-
-    public ClienteDto(String dni, String nombre, String apellido, String direccion, TipoClienteDto tipoClienteDto) {
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.tipoClienteDto = tipoClienteDto;
-    }
-
-    /*public ClienteDto(String dni, String nombre, String apellido, String direccion, Set<Float> tipoCliente1) {
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.tipoCliente1 = tipoCliente1;
-    }*/
-
-    public ClienteDto(String dni, String nombre, String apellido, String direccion, Set<TipoClienteDto> tipoCliente2) {
-        this.dni = dni;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.tipoCliente2 = tipoCliente2;
-    }
-
-    /*public ClienteDto(Long clienteId, String nombre, String apellido, String direccion, String telefono, Long tipoCliente, Long planPostpago) {
-        this.clienteId = clienteId;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipoCliente = tipoCliente;
-        this.planPostpago = planPostpago;
-    }*/
-
-    /*public ClienteDto(String nombre, String apellido, String direccion, String telefono, Long tipoCliente, Long planPostpago) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipoCliente = tipoCliente;
-        this.planPostpago = planPostpago;
-    }*/
-
-
-    /*public ClienteDto(Long clienteId, String nombre, String apellido, String direccion, String telefono, TipoClienteDto tipoClienteDto, PlanPostpagoDto planPostpagoDto) {
-        this.clienteId = clienteId;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipoClienteDto = tipoClienteDto;
-        this.planPostpagoDto = planPostpagoDto;
-    }*/
-
-    /*public ClienteDto(String nombre, String apellido, String direccion, String telefono, TipoClienteDto tipoClienteDto, PlanPostpagoDto planPostpagoDto) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipoClienteDto = tipoClienteDto;
-        this.planPostpagoDto = planPostpagoDto;
-    }*/
-
-    /*public ClienteDto(Cliente cliente) {
-        this.clienteId = cliente.getClienteId();
-        this.nombre = cliente.getNombre();
-        this.apellido = cliente.getApellido();
-        this.telefono = cliente.getTelefono();
-        this.direccion = cliente.getDireccion();
-        if (cliente.getTipoCliente() != null) {
-            this.tipoCliente = cliente.getTipoCliente().getTipoId();
-        }
-        if (cliente.getPlanPostpago() != null) {
-            this.planPostpago = cliente.getPlanPostpago().getPlanId();
-        }
-    }*/
-
-
-
-    /*public ClienteDto(String nombre, String apellido, String direccion, String telefono, Set<Float> tipoCliente1, Set<Float> planPostpago1) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipoCliente1 = tipoCliente1;
-        this.planPostpago1 = planPostpago1;
-    }*/
-
-    /*public ClienteDto(String nombre, String apellido, String direccion, String telefono, Set<TipoClienteDto> tipoCliente2, Set<PlanPostpagoDto> planPostpago2) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipoCliente2 = tipoCliente2;
-        this.planPostpago2 = planPostpago2;
-    }*/
-
-    /*public ClienteDto(String nombre, String apellido, String direccion, String telefono) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-    }*/
 
     public Long getClienteId() {
         return clienteId;
@@ -217,76 +83,27 @@ public class ClienteDto {
         this.direccion = direccion;
     }
 
-    /*public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }*/
-
-    public Long getTipoCliente() {
+    public Set<TipoClienteDto> getTipoCliente() {
         return tipoCliente;
     }
 
-    public void setTipoCliente(Long tipoCliente) {
+    public void setTipoCliente(Set<TipoClienteDto> tipoCliente) {
         this.tipoCliente = tipoCliente;
     }
 
-    /*public Long getPlanPostpago() {
-        return planPostpago;
-    }
-
-    public void setPlanPostpago(Long planPostpago) {
-        this.planPostpago = planPostpago;
-    }*/
-
-    public Set<Float> getTipoCliente1() {
+    public Set<TipoCliente> getTipoCliente1() {
         return tipoCliente1;
     }
 
-    public void setTipoCliente1(Set<Float> tipoCliente1) {
+    public void setTipoCliente1(Set<TipoCliente> tipoCliente1) {
         this.tipoCliente1 = tipoCliente1;
     }
 
-    public Set<TipoClienteDto> getTipoCliente2() {
-        return tipoCliente2;
+    public Set<Long> getTipoClienteIds() {
+        return tipoClienteIds;
     }
 
-    public void setTipoCliente2(Set<TipoClienteDto> tipoCliente2) {
-        this.tipoCliente2 = tipoCliente2;
+    public void setTipoClienteIds(Set<Long> tipoClienteIds) {
+        this.tipoClienteIds = tipoClienteIds;
     }
-
-    /*public Set<Float> getPlanPostpago1() {
-        return planPostpago1;
-    }
-
-    public void setPlanPostpago1(Set<Float> planPostpago1) {
-        this.planPostpago1 = planPostpago1;
-    }
-
-    public Set<PlanPostpagoDto> getPlanPostpago2() {
-        return planPostpago2;
-    }
-
-    public void setPlanPostpago2(Set<PlanPostpagoDto> planPostpago2) {
-        this.planPostpago2 = planPostpago2;
-    }*/
-
-
-    public TipoClienteDto getTipoClienteDto() {
-        return tipoClienteDto;
-    }
-
-    public void setTipoClienteDto(TipoClienteDto tipoClienteDto) {
-        this.tipoClienteDto = tipoClienteDto;
-    }
-
-    /*public PlanPostpagoDto getPlanPostpagoDto() {
-        return planPostpagoDto;
-    }
-
-    public void setPlanPostpagoDto(PlanPostpagoDto planPostpagoDto) {
-        this.planPostpagoDto = planPostpagoDto;
-    }*/
 }

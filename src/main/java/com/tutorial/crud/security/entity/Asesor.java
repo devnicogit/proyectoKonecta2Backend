@@ -1,6 +1,9 @@
 package com.tutorial.crud.security.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -30,6 +33,7 @@ public class Asesor {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "asesor_rol", joinColumns = @JoinColumn(name = "asesor_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @JsonManagedReference
     private Set<Rol> roles = new HashSet<>();
 
 

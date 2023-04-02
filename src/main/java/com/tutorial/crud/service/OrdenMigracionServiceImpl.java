@@ -1,6 +1,6 @@
 package com.tutorial.crud.service;
 
-import com.tutorial.crud.entity.OrdenMigracion;
+import com.tutorial.crud.swagger.entity.OrdenMigracion;
 import com.tutorial.crud.repository.OrdenMigracionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

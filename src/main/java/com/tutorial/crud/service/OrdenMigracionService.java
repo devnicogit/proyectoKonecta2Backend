@@ -1,6 +1,6 @@
 package com.tutorial.crud.service;
 
-import com.tutorial.crud.entity.OrdenMigracion;
+import com.tutorial.crud.swagger.entity.OrdenMigracion;
 
 import java.util.List;
 

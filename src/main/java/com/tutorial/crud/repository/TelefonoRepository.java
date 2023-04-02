@@ -1,9 +1,11 @@
 package com.tutorial.crud.repository;
 
-import com.tutorial.crud.swagger.entity.PlanPostpago;
+import com.tutorial.crud.swagger.entity.Telefono;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PlanPostpagoRepository extends JpaRepository<PlanPostpago, Long> {
+public interface TelefonoRepository extends JpaRepository<Telefono, Long> {
+
+
 }

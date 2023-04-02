@@ -1,7 +1,7 @@
 package com.tutorial.crud.controller;
 
 
-import com.tutorial.crud.entity.PlanPostpago;
+import com.tutorial.crud.swagger.entity.PlanPostpago;
 import com.tutorial.crud.service.PlanPostpagoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

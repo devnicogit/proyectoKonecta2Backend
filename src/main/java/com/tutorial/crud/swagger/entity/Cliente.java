@@ -1,18 +1,17 @@
-package com.tutorial.crud.entity;
+package com.tutorial.crud.swagger.entity;
 
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "cliente")
-@JsonIdentityInfo(scope = Cliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="clienteId")
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+//@JsonIdentityInfo(scope = Cliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="clienteId")
+//@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonIgnoreProperties("tipoCliente")
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,57 +37,10 @@ public class Cliente implements Serializable {
             name = "cliente_tipo_cliente",
             joinColumns = @JoinColumn(name = "cliente_id"),
             inverseJoinColumns = @JoinColumn(name = "tipo_id"))
+    @JsonManagedReference
     private Set<TipoCliente> tipoCliente = new HashSet<>();
 
 
-
-    /*@Column(name = "telefono")
-    private String telefono;*/
-
-    //@JsonIgnoreProperties("tipoId")
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "tipo_id", nullable = false)
-    //@JsonIdentityInfo(scope = TipoCliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="tipoId")
-    //@JsonIdentityReference(alwaysAsId = false)
-    //@JsonProperty("tipoCliente")
-    private TipoCliente tipoCliente;*/
-
-    //@JsonIgnoreProperties("planId")
-
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "plan_id", nullable = false)*/
-    /*@JsonIdentityInfo(scope = PlanPostpago.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="planId")
-    @JsonIdentityReference(alwaysAsId = false)*/
-    //@JsonProperty("planPostpago")
-    //private PlanPostpago planPostpago;
-
-
-    /*public Cliente(Long clienteId, String nombre, String apellido, String direccion, String telefono, TipoCliente tipoCliente, PlanPostpago planPostpago) {
-        this.clienteId = clienteId;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipoCliente = tipoCliente;
-        this.planPostpago = planPostpago;
-    }*/
-
-    /*public Cliente(String nombre, String apellido, String direccion, String telefono, TipoCliente tipoCliente, PlanPostpago planPostpago) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.tipoCliente = tipoCliente;
-        this.planPostpago = planPostpago;
-    }*/
-
-    /*public Cliente(Long clienteId, String nombre, String apellido, String direccion, String telefono) {
-        this.clienteId = clienteId;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.telefono = telefono;
-    }*/
 
     public Cliente(Long clienteId, String dni, String nombre, String apellido, String direccion) {
         this.clienteId = clienteId;

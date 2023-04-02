@@ -2,22 +2,20 @@ package com.tutorial.crud.service;
 
 import com.tutorial.crud.dto.ClienteDto;
 import com.tutorial.crud.dto.TipoClienteDto;
-import com.tutorial.crud.entity.Cliente;
-import com.tutorial.crud.entity.PlanPostpago;
-import com.tutorial.crud.entity.TipoCliente;
+import com.tutorial.crud.swagger.entity.Cliente;
+import com.tutorial.crud.swagger.entity.TipoCliente;
 import com.tutorial.crud.repository.ClienteRepository;
 import com.tutorial.crud.repository.PlanPostpagoRepository;
 import com.tutorial.crud.repository.TipoClienteRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -133,43 +131,28 @@ public class ClienteServiceImpl implements ClienteService {
 
 
     @Override
-    public Cliente update(Long id, Cliente cliente) {
-        logger.debug("Iniciando método update");
-        Optional<Cliente> clienteEncontrado = clienteRepository.findById(id);
-        if (clienteEncontrado.isPresent()) {
-            Cliente clienteActualizado = clienteEncontrado.get();
-            clienteActualizado.setDni(cliente.getDni());
-            clienteActualizado.setNombre(cliente.getNombre());
-            clienteActualizado.setApellido(cliente.getApellido());
-            //clienteActualizado.setTelefono(cliente.getTelefono());
-            clienteActualizado.setDireccion(cliente.getDireccion());
-            /*clienteActualizado.setTipoCliente(clienteActualizado.getTipoCliente());
-            clienteActualizado.setPlanPostpago(clienteActualizado.getPlanPostpago());*/
+    public Cliente update(Long id, ClienteDto clienteDto) {
 
-            /*TipoCliente tipoCliente = cliente.getTipoCliente();
-            if (tipoCliente != null) {
-                Optional<TipoCliente> tipoClienteEncontrado = tipoClienteRepository.findById(tipoCliente.getTipoId());
-                if (tipoClienteEncontrado.isPresent()) {
-                    clienteActualizado.setTipoCliente(tipoClienteEncontrado.get());
-                } else {
-                    throw new IllegalArgumentException("Tipo de cliente no encontrado");
-                }
-            }*/
 
-            /*PlanPostpago plan = cliente.getPlanPostpago();
-            if (plan != null) {
-                Optional<PlanPostpago> planEncontrado = planPostpagoRepository.findById(plan.getPlanId());
-                if (planEncontrado.isPresent()) {
-                    clienteActualizado.setPlanPostpago(planEncontrado.get());
-                } else {
-                    throw new IllegalArgumentException("Plan no encontrado");
-                }
-            }*/
+            Cliente clienteEncontrado = clienteRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("No se encontró el cliente con el ID " + id));
 
-            return clienteRepository.save(clienteActualizado);
-        } else {
-            throw new IllegalArgumentException("Cliente no encontrado");
-        }
+            clienteEncontrado.setDni(clienteDto.getDni());
+            clienteEncontrado.setNombre(clienteDto.getNombre());
+            clienteEncontrado.setApellido(clienteDto.getApellido());
+            clienteEncontrado.setDireccion(clienteDto.getDireccion());
+
+            // Actualizar los tipos de cliente asociados al cliente
+            Set<TipoCliente> tiposCliente = new HashSet<>();
+            for (Long tipoClienteId : clienteDto.getTipoClienteIds()) {
+                TipoCliente tipoCliente = tipoClienteRepository.findById(tipoClienteId)
+                        .orElseThrow(() -> new RuntimeException("No se encontró el tipo de cliente con el ID " + tipoClienteId));
+                tiposCliente.add(tipoCliente);
+            }
+            clienteEncontrado.setTipoClientes(tiposCliente);
+
+            return clienteRepository.save(clienteEncontrado);
+
     }
 
 

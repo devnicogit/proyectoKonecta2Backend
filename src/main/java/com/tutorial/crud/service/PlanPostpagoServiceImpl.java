@@ -1,8 +1,7 @@
 package com.tutorial.crud.service;
 
 import com.tutorial.crud.dto.PlanPostpagoDto;
-import com.tutorial.crud.entity.PlanPostpago;
-import com.tutorial.crud.entity.TipoCliente;
+import com.tutorial.crud.swagger.entity.PlanPostpago;
 import com.tutorial.crud.repository.PlanPostpagoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

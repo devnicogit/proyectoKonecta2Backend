@@ -5,6 +5,7 @@ import com.tutorial.crud.emailpassword.dto.ChangePasswordDTO;
 import com.tutorial.crud.emailpassword.dto.EmailValuesDTO;
 import com.tutorial.crud.emailpassword.service.EmailService;
 import com.tutorial.crud.security.entity.Asesor;
+import com.tutorial.crud.security.entity.dto.NuevoUsuario;
 import com.tutorial.crud.security.service.AsesorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,5 +76,6 @@ public class EmailController {
         asesorService.save(asesor);
         return new ResponseEntity(new Mensaje("Contraseña actualizada"), HttpStatus.OK);
     }
+
 
 }

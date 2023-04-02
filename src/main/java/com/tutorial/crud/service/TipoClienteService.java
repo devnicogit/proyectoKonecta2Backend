@@ -1,8 +1,6 @@
 package com.tutorial.crud.service;
 
-import com.tutorial.crud.dto.TipoClienteDto;
-import com.tutorial.crud.entity.Cliente;
-import com.tutorial.crud.entity.TipoCliente;
+import com.tutorial.crud.swagger.entity.TipoCliente;
 
 import java.util.List;
 

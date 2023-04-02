@@ -1,10 +1,8 @@
-package com.tutorial.crud.entity;
+package com.tutorial.crud.swagger.entity;
 
 import com.tutorial.crud.security.entity.Asesor;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMin;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity

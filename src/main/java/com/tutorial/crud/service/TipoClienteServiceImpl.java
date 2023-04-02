@@ -1,13 +1,11 @@
 package com.tutorial.crud.service;
 
-import com.tutorial.crud.dto.TipoClienteDto;
-import com.tutorial.crud.entity.TipoCliente;
+import com.tutorial.crud.swagger.entity.TipoCliente;
 import com.tutorial.crud.repository.TipoClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import springfox.documentation.swagger2.mappers.ModelMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

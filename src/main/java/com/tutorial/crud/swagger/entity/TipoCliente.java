@@ -1,19 +1,18 @@
-package com.tutorial.crud.entity;
+package com.tutorial.crud.swagger.entity;
 
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "tipo_cliente")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "tipoId", scope = TipoCliente.class)
-@JsonIdentityReference(alwaysAsId = false)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+//@JsonIdentityReference(alwaysAsId = false)
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties("cliente")
 public class TipoCliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,35 +26,11 @@ public class TipoCliente implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
-    @ManyToMany(mappedBy = "tipoCliente")
+    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "tipoCliente")
+    @JsonBackReference
     private Set<Cliente> cliente = new HashSet<>();
 
 
-
-
-
-
-/*@OneToMany(mappedBy = "tipoCliente", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JsonIgnoreProperties("tipoCliente")
-    //@JsonIgnoreProperties("clientes")
-    @JsonIgnore
-    private List<Cliente> clientes = new ArrayList<>();*/
-
-    /*public TipoCliente(Long tipoId, String nombre, List<Cliente> clientes) {
-        this.tipoId = tipoId;
-        this.nombre = nombre;
-        this.clientes = clientes;
-    }
-
-    public TipoCliente(String nombre){
-        this.nombre = nombre;
-    }*/
-
-    /*@JsonCreator
-    public TipoCliente(@JsonProperty("tipoId") Long tipoId, @JsonProperty("nombre") String nombre) {
-        this.tipoId = tipoId;
-        this.nombre = nombre;
-    }*/
 
     public TipoCliente(Long tipoId, String nombre, Set<Cliente> cliente) {
         this.tipoId = tipoId;
@@ -100,11 +75,4 @@ public class TipoCliente implements Serializable {
         this.cliente = cliente;
     }
 
-    /*public List<Cliente> getClientes() {
-        return clientes;
-    }
-
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
-    }*/
 }
