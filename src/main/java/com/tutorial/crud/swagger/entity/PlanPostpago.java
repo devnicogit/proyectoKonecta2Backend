@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "plan_postpago")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "planId", scope = PlanPostpago.class)
-@JsonIdentityReference(alwaysAsId = false)
+//@JsonIdentityReference(alwaysAsId = false)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class PlanPostpago implements Serializable {
 

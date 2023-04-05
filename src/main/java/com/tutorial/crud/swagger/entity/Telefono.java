@@ -1,15 +1,13 @@
 package com.tutorial.crud.swagger.entity;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "telefono")
-@JsonIdentityInfo(scope = Cliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="clienteId")
+@JsonIdentityInfo(scope = Telefono.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Telefono {
 
@@ -22,14 +20,16 @@ public class Telefono {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "plan_id", nullable = false)
-    @JsonIdentityInfo(scope = PlanPostpago.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="planId")
-    @JsonIdentityReference(alwaysAsId = false)
+    //@JsonIdentityInfo(scope = PlanPostpago.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="planId")
+    //@JsonIdentityReference(alwaysAsId = true)
+   // @JsonProperty("plan")
     private PlanPostpago plan;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id", nullable = false)
-    @JsonIdentityInfo(scope = Cliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="clienteId")
-    @JsonIdentityReference(alwaysAsId = false)
+    //@JsonIdentityInfo(scope = Cliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="clienteId")
+    //@JsonIdentityReference(alwaysAsId = false)
+    //@JsonProperty("cliente")
     private Cliente cliente;
 
     public Telefono(){
@@ -47,6 +47,10 @@ public class Telefono {
         this.numero = numero;
         this.plan = plan;
         this.cliente = cliente;
+    }
+
+    public Telefono(String numero, PlanPostpago planPostpago, Cliente cliente, Set<TipoCliente> tiposCliente) {
+
     }
 
     public Long getId() {

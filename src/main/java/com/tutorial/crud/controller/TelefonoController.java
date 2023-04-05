@@ -3,6 +3,7 @@ package com.tutorial.crud.controller;
 import com.tutorial.crud.dto.ClienteDto;
 import com.tutorial.crud.dto.Mensaje;
 import com.tutorial.crud.dto.TelefonoDto;
+import com.tutorial.crud.repository.TipoClienteRepository;
 import com.tutorial.crud.service.ClienteService;
 import com.tutorial.crud.service.PlanPostpagoService;
 import com.tutorial.crud.service.TelefonoService;
@@ -10,6 +11,7 @@ import com.tutorial.crud.service.TipoClienteService;
 import com.tutorial.crud.swagger.entity.Cliente;
 import com.tutorial.crud.swagger.entity.PlanPostpago;
 import com.tutorial.crud.swagger.entity.Telefono;
+import com.tutorial.crud.swagger.entity.TipoCliente;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/telefono")
@@ -33,6 +38,12 @@ public class TelefonoController {
 
     @Autowired
     private PlanPostpagoService planPostpagoService;
+
+    @Autowired
+    private TipoClienteRepository tipoClienteRepository;
+
+    @Autowired
+    private TipoClienteService tipoClienteService;
 
     @ApiOperation("Muestra una lista de telefonos")
     @GetMapping("/lista")
@@ -51,13 +62,46 @@ public class TelefonoController {
     @PostMapping("/create")
     public ResponseEntity<?> createTelefono(@RequestBody TelefonoDto telefonoDto) {
         Cliente cliente = clienteService.findById(telefonoDto.getCliente());
-        telefonoDto.setCliente(telefonoDto.getCliente());
         PlanPostpago planPostpago = planPostpagoService.findById(telefonoDto.getPlanPostpago());
-        telefonoDto.setPlanPostpago(telefonoDto.getPlanPostpago());
+
+        //telefonoDto.setCliente(cliente.getClienteId());
+        //telefonoDto.setPlanPostpago(planPostpago.getPlanId());
 
         Telefono telefono = new Telefono(telefonoDto.getNumero(),planPostpago,cliente);
         telefonoService.save(telefono);
+
+        // Actualizar los tipos de cliente del cliente
+        /*Set<TipoCliente> tiposCliente = new HashSet<>();
+        if (planPostpago.getPlanId() == 1) {
+            // Si el plan es prepago, asigna el tipo 1
+            TipoCliente tipoCliente = tipoClienteService.findById(1L);
+            tiposCliente.add(tipoCliente);
+        } else {
+            // Si el plan es postpago, asigna el tipo 2
+            TipoCliente tipoCliente = tipoClienteService.findById(2L);
+            tiposCliente.add(tipoCliente);
+        }
+        cliente.setTipoCliente(tiposCliente);
+        clienteService.save(cliente);*/
+        // Agregar o actualizar el registro en la tabla cliente_tipo_cliente
+        // Agregar o actualizar el registro en la tabla cliente_tipo_cliente
+        TipoCliente tipoCliente = null;
+        if (planPostpago.getPlanId() == 1) {
+            // Si el plan es prepago, asigna el tipo 1
+            tipoCliente = tipoClienteService.findById(1L);
+        } else {
+            // Si el plan es postpago, asigna el tipo 2
+            tipoCliente = tipoClienteService.findById(2L);
+        }
+
+        Set<TipoCliente> tiposCliente = cliente.getTipoCliente();
+        tiposCliente.add(tipoCliente);
+        cliente.setTipoCliente(tiposCliente);
+        clienteService.save(cliente);
+
         return new ResponseEntity<>(new Mensaje("Teléfono Creado"), HttpStatus.OK);
+
+
 
     }
 

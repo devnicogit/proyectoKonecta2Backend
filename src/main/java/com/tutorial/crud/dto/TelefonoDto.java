@@ -2,36 +2,41 @@ package com.tutorial.crud.dto;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.tutorial.crud.swagger.entity.Cliente;
 import com.tutorial.crud.swagger.entity.PlanPostpago;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
 public class TelefonoDto {
 
-    @NotBlank
+
     private Long id;
     @NotBlank
     private String numero;
 
     private Long planPostpago;
-
+    //@JsonProperty("cliente")
     private Long cliente;
 
-    private PlanPostpagoDto planPostpagoDto;
+    private Set<Long> tipoClienteIds;
 
-    private ClienteDto clienteDto;
+    //private PlanPostpagoDto planPostpagoDto;
 
-    @NotBlank
+    //private ClienteDto clienteDto;
+
+    @NotEmpty
     private Set<Float> planPostpago1 = new HashSet<>();
 
     private Set<PlanPostpagoDto> planPostpago2 = new HashSet<>();
 
-    @NotBlank
+    @NotEmpty
     private Set<Float> cliente1 = new HashSet<>();
 
     private Set<ClienteDto> cliente2 = new HashSet<>();
@@ -56,11 +61,19 @@ public class TelefonoDto {
         this.cliente = cliente;
     }
 
-    public TelefonoDto(String numero,PlanPostpagoDto planPostpagoDto, ClienteDto clienteDto) {
+
+    public TelefonoDto(String numero, Long cliente, Long planPostpago, Set<Long> tipoClienteIds) {
+        this.numero = numero;
+        this.cliente = cliente;
+        this.planPostpago = planPostpago;
+        this.tipoClienteIds = tipoClienteIds;
+    }
+
+    /*public TelefonoDto(String numero,PlanPostpagoDto planPostpagoDto, ClienteDto clienteDto) {
         this.numero = numero;
         this.planPostpagoDto = planPostpagoDto;
         this.clienteDto = clienteDto;
-    }
+    }*/
 
     public TelefonoDto(String numero, Set<Float> planPostpago1, Set<Float> cliente1) {
         this.numero = numero;
@@ -106,7 +119,15 @@ public class TelefonoDto {
         this.cliente = cliente;
     }
 
-    public PlanPostpagoDto getPlanPostpagoDto() {
+    public void setTipoClienteIds(Set<Long> tipoClienteIds) {
+        this.tipoClienteIds = tipoClienteIds;
+    }
+
+    public Set<Long> getTipoClienteIds() {
+        return tipoClienteIds;
+    }
+
+    /* public PlanPostpagoDto getPlanPostpagoDto() {
         return planPostpagoDto;
     }
 
@@ -120,7 +141,7 @@ public class TelefonoDto {
 
     public void setClienteDto(ClienteDto clienteDto) {
         this.clienteDto = clienteDto;
-    }
+    }*/
 
     public Set<Float> getPlanPostpago1() {
         return planPostpago1;
@@ -153,4 +174,5 @@ public class TelefonoDto {
     public void setCliente2(Set<ClienteDto> cliente2) {
         this.cliente2 = cliente2;
     }
+
 }

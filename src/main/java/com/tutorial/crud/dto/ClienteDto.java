@@ -14,7 +14,6 @@ public class ClienteDto {
 
 
     private Long clienteId;
-    @NotBlank
     private String dni;
     @NotBlank
     private String nombre;

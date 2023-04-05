@@ -122,8 +122,13 @@ public class Cliente implements Serializable {
         return tipoCliente;
     }
 
-    public void setTipoClientes(Set<TipoCliente> tipoCliente) {
+    public void setTipoCliente(Set<TipoCliente> tipoCliente) {
         this.tipoCliente = tipoCliente;
+    }
+
+    public void addTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente.add(tipoCliente);
+        tipoCliente.getCliente().add(this);
     }
 
     /*public String getTelefono() {

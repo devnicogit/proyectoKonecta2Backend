@@ -67,7 +67,7 @@ public class ClienteController {
                     .orElseThrow(() -> new RuntimeException("No se encontró el tipo de cliente con el ID " + tipoClienteId));
             tiposCliente.add(tipoCliente);
         }
-        cliente.setTipoClientes(tiposCliente);
+        cliente.setTipoCliente(tiposCliente);
         clienteService.save(cliente);
 
         return new ResponseEntity(new Mensaje("Cliente guardado"), HttpStatus.CREATED);

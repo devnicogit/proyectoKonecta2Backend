@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +46,37 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente save(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
+
+
+    @Transactional
+    public Cliente createCliente(ClienteDto clienteDto) {
+        Cliente cliente = new Cliente();
+        cliente.setDni(clienteDto.getDni());
+        cliente.setNombre(clienteDto.getNombre());
+        cliente.setApellido(clienteDto.getApellido());
+        cliente.setDireccion(clienteDto.getDireccion());
+
+        Set<TipoCliente> tiposCliente = new HashSet<>();
+        for (Long tipoId : clienteDto.getTipoClienteIds()) {
+            Optional<TipoCliente> tipoClienteOptional = tipoClienteRepository.findById(tipoId);
+            tipoClienteOptional.ifPresent(tiposCliente::add);
+        }
+        cliente.setTipoCliente(tiposCliente);
+
+        Cliente savedCliente = clienteRepository.save(cliente);
+        updateClienteTipoCliente(savedCliente, tiposCliente);
+
+        return savedCliente;
+    }
+
+    private void updateClienteTipoCliente(Cliente cliente, Set<TipoCliente> tiposCliente) {
+        cliente.getTipoCliente().clear();
+        for (TipoCliente tipoCliente : tiposCliente) {
+            cliente.addTipoCliente(tipoCliente);
+        }
+        clienteRepository.save(cliente);
+    }
+
 
     /*@Override
     public ClienteDto save(ClienteDto clienteDto) {
@@ -149,7 +181,7 @@ public class ClienteServiceImpl implements ClienteService {
                         .orElseThrow(() -> new RuntimeException("No se encontró el tipo de cliente con el ID " + tipoClienteId));
                 tiposCliente.add(tipoCliente);
             }
-            clienteEncontrado.setTipoClientes(tiposCliente);
+            clienteEncontrado.setTipoCliente(tiposCliente);
 
             return clienteRepository.save(clienteEncontrado);
 
