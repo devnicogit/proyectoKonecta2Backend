@@ -16,7 +16,7 @@ import java.util.Set;
 
 public class TelefonoDto {
 
-
+    @NotNull
     private Long id;
     @NotBlank
     private String numero;
