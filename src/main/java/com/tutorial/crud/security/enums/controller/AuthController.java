@@ -116,4 +116,15 @@ public class AuthController {
         return new ResponseEntity(asesores, HttpStatus.OK);
     }
 
+    @GetMapping("/asesores/{nombreUsuario}")
+    public ResponseEntity<Asesor> getAsesorByNombreUsuario(@PathVariable String nombreUsuario) {
+        Optional<Asesor> asesor = asesorService.getByNombreUsuario(nombreUsuario);
+
+        if (asesor.isPresent()) {
+            return ResponseEntity.ok(asesor.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

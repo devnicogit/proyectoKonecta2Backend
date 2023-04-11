@@ -47,6 +47,14 @@ public class OrdenMigracionController {
         return new ResponseEntity<List<OrdenMigracion>>(list, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Telefono> getTelefonoById(@PathVariable Long id) {
+        Telefono telefono = telefonoService.findById(id);
+        return ResponseEntity.ok(telefono);
+    }
+
+
     /*@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> guardarOrdenMigracion(
