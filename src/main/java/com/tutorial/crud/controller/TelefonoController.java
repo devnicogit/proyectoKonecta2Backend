@@ -20,10 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/telefono")
@@ -107,7 +104,7 @@ public class TelefonoController {
 
 
 
-    @PutMapping("/update/{id}")
+    /*@PutMapping("/update/{id}")
     public ResponseEntity<Telefono> updateTelefono(@PathVariable Long id, @Valid @RequestBody Telefono telefono) {
 
         PlanPostpago planPostpago = planPostpagoService.findById(telefono.getPlan().getPlanId());
@@ -129,7 +126,103 @@ public class TelefonoController {
 
         Telefono updatedTelefono = telefonoService.update(id, telefono);
         return ResponseEntity.ok(updatedTelefono);
+    }*/
+
+    /*@PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Telefono> updateTelefono(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Telefono telefono = telefonoService.findById(id);
+        if (telefono == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (updates.containsKey("numero")) {
+            telefono.setNumero((String) updates.get("numero"));
+        }
+        if (updates.containsKey("plan")) {
+            LinkedHashMap planMap = (LinkedHashMap) updates.get("plan");
+            Long planId = ((Number) planMap.get("planId")).longValue();
+            //PlanPostpago planPostpago = planPostpagoService.findById(Long.valueOf((Integer) updates.get("plan")));
+            PlanPostpago planPostpago = planPostpagoService.findById(planId);
+            if (planPostpago == null) {
+                return ResponseEntity.badRequest().build();
+            }
+            Telefono originalTelefono = new Telefono();
+            originalTelefono.setPlan(telefono.getPlan());
+            //telefono.setPlan(planPostpago);
+            clienteService.actualizarTiposClienteSiNecesario(telefono.getCliente(), originalTelefono);
+            telefono.setPlan(planPostpago);
+            //clienteService.actualizarTiposCliente(telefono.getCliente());
+        }
+        if (updates.containsKey("cliente")) {
+            LinkedHashMap clienteMap = (LinkedHashMap) updates.get("cliente");
+            Long clienteId = ((Number) clienteMap.get("clienteId")).longValue();
+            //Cliente cliente = clienteService.findById(Long.valueOf((Integer) updates.get("cliente")));
+            Cliente cliente = clienteService.findById(clienteId);
+            if (cliente == null) {
+                return ResponseEntity.badRequest().build();
+            }
+            telefono.setCliente(cliente);
+        }
+        Telefono updatedTelefono = telefonoService.update(id, telefono);
+        //clienteService.actualizarTiposCliente(telefono.getCliente());
+        return ResponseEntity.ok(updatedTelefono);
     }
+*/
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Telefono> updateTelefono(@PathVariable Long id, @Valid @RequestBody Telefono telefono) {
+
+
+        PlanPostpago planPostpago = planPostpagoService.findById(telefono.getPlan().getPlanId());
+        Cliente cliente = clienteService.findById(telefono.getCliente().getClienteId());
+
+        // Verificar si los objetos son nulos antes de acceder a sus propiedades
+        if (planPostpago == null) {
+            // Manejar el caso en que planPostpago sea nulo
+            return ResponseEntity.badRequest().build();
+        }
+
+        if (cliente == null) {
+            // Manejar el caso en que tipoCliente sea nulo
+            return ResponseEntity.badRequest().build();
+        }
+        telefono.setPlan(planPostpago);
+        telefono.setCliente(cliente);
+
+
+        Telefono updatedTelefono = telefonoService.update(id, telefono);
+        return ResponseEntity.ok(updatedTelefono);
+    }
+
+
+    /*@PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Telefono> updateTelefono(@PathVariable Long id, @RequestBody Telefono telefono) {
+        Telefono telefonoActual = telefonoService.findById(id);
+        if (telefonoActual == null) {
+            return ResponseEntity.notFound().build();
+        }
+        telefonoActual.setNumero(telefono.getNumero());
+        if (telefono.getPlan() != null) {
+            PlanPostpago planPostpago = planPostpagoService.findById(telefono.getPlan().getPlanId());
+            if (planPostpago == null) {
+                return ResponseEntity.badRequest().build();
+            }
+            Telefono originalTelefono = new Telefono();
+            originalTelefono.setPlan(telefonoActual.getPlan());
+            clienteService.actualizarTiposClienteSiNecesario(telefonoActual.getCliente(), originalTelefono);
+            telefonoActual.setPlan(planPostpago);
+        }
+        if (telefono.getCliente() != null) {
+            Cliente cliente = clienteService.findById(telefono.getCliente().getClienteId());
+            if (cliente == null) {
+                return ResponseEntity.badRequest().build();
+            }
+            telefonoActual.setCliente(cliente);
+        }
+        Telefono updatedTelefono = telefonoService.update(id, telefonoActual);
+        return ResponseEntity.ok(updatedTelefono);
+    }*/
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteTelefono(@PathVariable Long id) {

@@ -18,7 +18,7 @@ public class TipoCliente implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @JsonProperty("tipoId")
+    //@JsonProperty("tipoId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tipo_id")
     private Long tipoId;

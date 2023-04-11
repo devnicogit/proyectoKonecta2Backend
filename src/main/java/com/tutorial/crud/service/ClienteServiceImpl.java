@@ -2,7 +2,10 @@ package com.tutorial.crud.service;
 
 import com.tutorial.crud.dto.ClienteDto;
 import com.tutorial.crud.dto.TipoClienteDto;
+import com.tutorial.crud.repository.TelefonoRepository;
 import com.tutorial.crud.swagger.entity.Cliente;
+import com.tutorial.crud.swagger.entity.PlanPostpago;
+import com.tutorial.crud.swagger.entity.Telefono;
 import com.tutorial.crud.swagger.entity.TipoCliente;
 import com.tutorial.crud.repository.ClienteRepository;
 import com.tutorial.crud.repository.PlanPostpagoRepository;
@@ -13,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -31,6 +31,15 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
     private TipoClienteRepository tipoClienteRepository;
+
+    @Autowired
+    private TelefonoRepository telefonoRepository;
+
+    @Autowired
+    private TelefonoService telefonoService;
+
+    @Autowired
+    private TipoClienteService tipoClienteService;
 
     @Override
     public List<Cliente> findAll() {
@@ -70,13 +79,48 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     private void updateClienteTipoCliente(Cliente cliente, Set<TipoCliente> tiposCliente) {
-        cliente.getTipoCliente().clear();
+        /*cliente.getTipoCliente().clear();
         for (TipoCliente tipoCliente : tiposCliente) {
             cliente.addTipoCliente(tipoCliente);
+        }
+        clienteRepository.save(cliente);*/
+
+        Set<TipoCliente> tiposClienteActuales = cliente.getTipoCliente();
+        for (TipoCliente tipoCliente : tiposCliente) {
+            if (!tiposClienteActuales.contains(tipoCliente)) {
+                cliente.addTipoCliente(tipoCliente);
+            }
         }
         clienteRepository.save(cliente);
     }
 
+    public void actualizarTiposCliente(Cliente cliente) {
+        Set<TipoCliente> tiposCliente = new HashSet<>();
+        for (Telefono telefono : telefonoService.findByCliente(cliente)) {
+            if (telefono.getPlan() instanceof PlanPostpago) {
+                tiposCliente.add(tipoClienteService.findByNombre("Postpago"));
+            } else {
+                tiposCliente.add(tipoClienteService.findByNombre("Prepago"));
+            }
+        }
+        cliente.setTipoCliente(tiposCliente);
+        clienteRepository.save(cliente);
+    }
+
+    public void actualizarTiposClienteSiNecesario(Cliente cliente, Telefono telefonoOriginal) {
+        Set<TipoCliente> tiposCliente = new HashSet<>();
+        for (Telefono telefono : telefonoService.findByCliente(cliente)) {
+            if (telefono.getPlan() instanceof PlanPostpago) {
+                tiposCliente.add(tipoClienteService.findByNombre("Postpago"));
+            } else {
+                tiposCliente.add(tipoClienteService.findByNombre("Prepago"));
+            }
+        }
+        cliente.setTipoCliente(tiposCliente);
+        if (!tiposCliente.equals(cliente.getTipoCliente()) && telefonoOriginal.getPlan() instanceof PlanPostpago) {
+            updateClienteTipoCliente(cliente, tiposCliente);
+        }
+    }
 
     /*@Override
     public ClienteDto save(ClienteDto clienteDto) {
@@ -185,6 +229,11 @@ public class ClienteServiceImpl implements ClienteService {
 
             return clienteRepository.save(clienteEncontrado);
 
+    }
+
+    @Override
+    public List<Telefono> findByCliente(Cliente cliente) {
+        return telefonoRepository.findByCliente(cliente);
     }
 
 

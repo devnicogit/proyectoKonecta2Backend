@@ -30,6 +30,7 @@ public class Telefono {
     //@JsonIdentityInfo(scope = Cliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="clienteId")
     //@JsonIdentityReference(alwaysAsId = false)
     //@JsonProperty("cliente")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Agregar esta anotación
     private Cliente cliente;
 
     public Telefono(){

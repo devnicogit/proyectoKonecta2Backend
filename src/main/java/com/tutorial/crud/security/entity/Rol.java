@@ -26,6 +26,10 @@ public class Rol {
     public Rol() {
     }
 
+    public Rol(Long id){
+        this.id = id;
+    }
+
     public Rol(@NotNull RolNombre rolNombre) {
         this.rolNombre = rolNombre;
     }

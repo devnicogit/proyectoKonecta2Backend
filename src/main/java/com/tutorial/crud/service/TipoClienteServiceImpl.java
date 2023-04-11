@@ -82,6 +82,10 @@ public class TipoClienteServiceImpl implements TipoClienteService {
         }
     }
 
+    @Override
+    public TipoCliente findByNombre(String nombre) {
+        return tipoClienteRepository.findByNombre(nombre);
+    }
 
 
     @Override

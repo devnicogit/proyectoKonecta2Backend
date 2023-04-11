@@ -12,4 +12,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     List<Cliente> findByTipoCliente(TipoCliente tipoCliente);
     /*List<ClienteDto> findByNombre(@Param("nombre") String nombre);*/
 
+    //actualizarTiposCliente(Cliente cliente);
+
 }

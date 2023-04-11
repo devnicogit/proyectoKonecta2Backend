@@ -39,11 +39,18 @@ public class TelefonoServiceImpl implements TelefonoService{
     }
 
     @Override
+    public Optional<Telefono> findByIds(Long id) {
+        return telefonoRepository.findById(id);
+    }
+
+    @Override
     public Telefono save(Telefono telefono) {
         return telefonoRepository.save(telefono);
     }
 
-    @Override
+
+
+    /*@Override
     public Telefono update(Long id, Telefono telefono) {
         logger.debug("Iniciando método update");
         Optional<Telefono> telefonoEncontrado = telefonoRepository.findById(id);
@@ -76,7 +83,27 @@ public class TelefonoServiceImpl implements TelefonoService{
         } else {
             throw new IllegalArgumentException("Teléfono no encontrado");
         }
+    }*/
+
+    @Override
+    public Telefono update(Long id, Telefono telefono) {
+        Telefono existingTelefono = telefonoRepository.findById(id).orElse(null);
+        if (existingTelefono == null) {
+            return null;
+        }
+        existingTelefono.setNumero(telefono.getNumero());
+        existingTelefono.setPlan(telefono.getPlan());
+        existingTelefono.setCliente(telefono.getCliente());
+        Telefono updatedTelefono = telefonoRepository.save(existingTelefono);
+        return updatedTelefono;
     }
+
+    @Override
+    public List<Telefono> findByCliente(Cliente cliente) {
+        return telefonoRepository.findByCliente(cliente);
+    }
+
+
 
     @Override
     public void delete(Long id) {

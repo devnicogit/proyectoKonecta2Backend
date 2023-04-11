@@ -1,6 +1,7 @@
 package com.tutorial.crud.swagger.entity;
 
 import com.tutorial.crud.security.entity.Asesor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -51,13 +52,6 @@ public class OrdenMigracion {
         this.fecha = fecha;
     }
 
-    /*public OrdenMigracion(Long id, Asesor asesor, Cliente cliente, PlanPostpago plan, LocalDate fecha) {
-        this.id = id;
-        this.asesor = asesor;
-        this.cliente = cliente;
-        this.plan = plan;
-        this.fecha = fecha;
-    }*/
 
     public Long getId() {
         return id;
@@ -75,13 +69,6 @@ public class OrdenMigracion {
         this.asesor = asesor;
     }
 
-    /*public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }*/
 
     public PlanPostpago getPlan() {
         return plan;

@@ -1,6 +1,8 @@
 package com.tutorial.crud.security.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -33,12 +35,21 @@ public class Asesor {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "asesor_rol", joinColumns = @JoinColumn(name = "asesor_id"),
             inverseJoinColumns = @JoinColumn(name = "rol_id"))
-    @JsonManagedReference
+    //@JsonManagedReference
+    @JsonBackReference
     private Set<Rol> roles = new HashSet<>();
 
 
 
     public Asesor() {
+    }
+
+    public Asesor(Long id){
+        this.id= id;
+    }
+
+    public static Asesor fromId(Long id) {
+        return new Asesor(id);
     }
 
 

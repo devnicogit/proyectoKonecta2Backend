@@ -27,6 +27,11 @@ public class PlanPostpagoServiceImpl implements PlanPostpagoService {
     }
 
     @Override
+    public Optional<PlanPostpago> findByIds(Long id) {
+        return planPostpagoRepository.findById(id);
+    }
+
+    @Override
     public PlanPostpago save(PlanPostpago planPostpago) {
         return planPostpagoRepository.save(planPostpago);
     }

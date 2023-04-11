@@ -12,6 +12,7 @@ import java.util.Set;
 //@JsonIdentityInfo(scope = Cliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="clienteId")
 //@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties("tipoCliente")
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -77,4 +77,9 @@ public class AsesorService {
 
     public List<Asesor> findAll(){return asesorRepository.findAll();};
 
+    public Optional<Asesor> findById(Long id) {
+        return asesorRepository.findById(id);
+    }
+
+
 }

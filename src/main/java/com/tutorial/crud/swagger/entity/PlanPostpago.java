@@ -38,6 +38,10 @@ public class PlanPostpago implements Serializable {
 
     }
 
+    public PlanPostpago(Long planId){
+        this.planId = planId;
+    }
+
 
     public PlanPostpago(String nombrePlan) {
         this.nombrePlan = nombrePlan;

@@ -18,5 +18,7 @@ public interface TipoClienteService {
 
     TipoCliente update(Long id, TipoCliente tipoCliente);
 
+    TipoCliente findByNombre(String nombre);
+
     void delete(Long id);
 }
