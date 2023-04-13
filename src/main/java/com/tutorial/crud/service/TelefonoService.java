@@ -14,17 +14,9 @@ public interface TelefonoService {
 
     Telefono findById(Long id);
 
-
-
     Optional<Telefono> findByIds(Long id);
 
     Telefono save(Telefono telefono);
-
-    /*ClienteDto save(ClienteDto clienteDto);*/
-
-    /*ClienteDto getClienteById(Long id);
-    List<ClienteDto> getAllClientes();
-    ClienteDto createCliente(ClienteDto clienteDto);*/
 
     Telefono update(Long id, Telefono telefono);
 

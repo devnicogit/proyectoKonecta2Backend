@@ -1,7 +1,11 @@
 package com.tutorial.crud;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.tutorial.crud.util.ByteBuddyInterceptorSerializer;
+import org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +43,12 @@ public class CrudApplication implements WebMvcConfigurer {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
 		builder.featuresToEnable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		builder.modules(new JavaTimeModule());
+
+		ObjectMapper mapper = new ObjectMapper();
+		SimpleModule module = new SimpleModule();
+		module.addSerializer(ByteBuddyInterceptor.class, new ByteBuddyInterceptorSerializer());
+		mapper.registerModule(module);
+		converter.setObjectMapper(mapper);
 
 		converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
 	}

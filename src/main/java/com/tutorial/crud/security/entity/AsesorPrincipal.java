@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AsesorPrincipal implements UserDetails {
+
+    private Long id;
     private String nombre;
 
     private String apellido;
@@ -78,6 +80,12 @@ public class AsesorPrincipal implements UserDetails {
 
     public String getApellido(){return apellido;}
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
 

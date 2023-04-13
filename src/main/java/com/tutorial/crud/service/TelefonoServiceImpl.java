@@ -48,43 +48,6 @@ public class TelefonoServiceImpl implements TelefonoService{
         return telefonoRepository.save(telefono);
     }
 
-
-
-    /*@Override
-    public Telefono update(Long id, Telefono telefono) {
-        logger.debug("Iniciando método update");
-        Optional<Telefono> telefonoEncontrado = telefonoRepository.findById(id);
-        if (telefonoEncontrado.isPresent()) {
-            Telefono telefonoActualizado = telefonoEncontrado.get();
-            telefonoActualizado.setNumero(telefono.getNumero());
-
-            PlanPostpago plan = telefono.getPlan();
-            if (plan != null) {
-                Optional<PlanPostpago> planEncontrado = planPostpagoRepository.findById(plan.getPlanId());
-                if (planEncontrado.isPresent()) {
-                    telefonoActualizado.setPlan(planEncontrado.get());
-                } else {
-                    throw new IllegalArgumentException("Plan no encontrado");
-                }
-            }
-
-            Cliente cliente= telefono.getCliente();
-            if (cliente != null) {
-                Optional<Cliente> clienteEncontrado = clienteRepository.findById(cliente.getClienteId());
-                if (clienteEncontrado.isPresent()) {
-                    telefonoActualizado.setCliente(clienteEncontrado.get());
-                } else {
-                    throw new IllegalArgumentException("Cliente no encontrado");
-                }
-            }
-
-
-            return telefonoRepository.save(telefonoActualizado);
-        } else {
-            throw new IllegalArgumentException("Teléfono no encontrado");
-        }
-    }*/
-
     @Override
     public Telefono update(Long id, Telefono telefono) {
         Telefono existingTelefono = telefonoRepository.findById(id).orElse(null);
@@ -102,8 +65,6 @@ public class TelefonoServiceImpl implements TelefonoService{
     public List<Telefono> findByCliente(Cliente cliente) {
         return telefonoRepository.findByCliente(cliente);
     }
-
-
 
     @Override
     public void delete(Long id) {

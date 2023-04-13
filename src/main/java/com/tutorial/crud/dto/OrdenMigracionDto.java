@@ -13,18 +13,18 @@ import java.time.LocalDate;
 public class OrdenMigracionDto {
 
 
-    private String error;
+    //private String error;
     private Long id;
     private Long telefono;
     private Long asesor;
     private Long plan;
 
-    private Telefono telefono1;
+    //private Telefono telefono1;
 
-    private Asesor asesor1;
+    //private Asesor asesor1;
 
 
-    private PlanPostpago plan1;
+    //private PlanPostpago plan1;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
@@ -50,9 +50,9 @@ public class OrdenMigracionDto {
     }
 
 
-    public OrdenMigracionDto(String error) {
+  /*public OrdenMigracionDto(String error) {
         this.error = error;
-    }
+    }*/
 
 
     public Long getId() {
@@ -63,13 +63,13 @@ public class OrdenMigracionDto {
         this.id = id;
     }
 
-    public String getError() {
+    /*public String getError() {
         return error;
-    }
+    }*/
 
-    public void setError(String error) {
+    /*public void setError(String error) {
         this.error = error;
-    }
+    }*/
 
     public Long getTelefono() {
         return telefono;
@@ -95,7 +95,7 @@ public class OrdenMigracionDto {
         this.plan = plan;
     }
 
-    public Telefono getTelefono1() {
+   /* public Telefono getTelefono1() {
         return telefono1;
     }
 
@@ -117,7 +117,7 @@ public class OrdenMigracionDto {
 
     public void setPlan1(PlanPostpago plan1) {
         this.plan1 = plan1;
-    }
+    }*/
 
     public LocalDate getFecha() {
         return fecha;

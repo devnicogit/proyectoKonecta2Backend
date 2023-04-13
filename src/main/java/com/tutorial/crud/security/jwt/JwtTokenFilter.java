@@ -1,5 +1,6 @@
 package com.tutorial.crud.security.jwt;
 
+import com.tutorial.crud.security.entity.AsesorPrincipal;
 import com.tutorial.crud.security.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(auth);
+
+                /*Long idUsuario = ((AsesorPrincipal) userDetails).getId();
+                req.setAttribute("idUsuario", idUsuario);*/
             }
         } catch (Exception e){
             logger.error("fail en el método doFilter " + e.getMessage());

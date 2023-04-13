@@ -1,13 +1,17 @@
 package com.tutorial.crud.swagger.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.tutorial.crud.security.entity.Asesor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name="orden_migracion")
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, allowSetters = true)
 public class OrdenMigracion {
 
 
@@ -15,11 +19,11 @@ public class OrdenMigracion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "telefono_id", nullable = false)
     private Telefono telefono;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "asesor_id", nullable = false)
     private Asesor asesor;
 
@@ -27,12 +31,22 @@ public class OrdenMigracion {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;*/
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "plan_id", nullable = false)
     private PlanPostpago plan;
 
     @Column(name = "fecha")
     private LocalDate fecha;
+
+    /*@OneToMany(mappedBy = "ordenMigracion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Set<DetalleOrdenMigracion> detallesOrdenMigracion;*/
+
+
+  /*  public Set<DetalleOrdenMigracion> getDetallesOrdenMigracion() {
+        return detallesOrdenMigracion;
+    }*/
+
 
     public OrdenMigracion() {
     }

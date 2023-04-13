@@ -32,4 +32,9 @@ public class OrdenMigracionServiceImpl implements OrdenMigracionService{
     public void delete(Long id) {
         ordenMigracionRepository.deleteById(id);
     }
+
+    @Override
+    public List<OrdenMigracion> findAllWithTelefono() {
+        return ordenMigracionRepository.findAllWithTelefono();
+    }
 }

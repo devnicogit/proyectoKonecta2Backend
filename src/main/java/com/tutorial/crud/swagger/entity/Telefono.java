@@ -1,14 +1,17 @@
 package com.tutorial.crud.swagger.entity;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.tutorial.crud.util.TelefonoSerializer;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "telefono")
-@JsonIdentityInfo(scope = Telefono.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
+//@JsonIdentityInfo(scope = Telefono.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Telefono {
 
     @Id
@@ -30,8 +33,9 @@ public class Telefono {
     //@JsonIdentityInfo(scope = Cliente.class, generator= ObjectIdGenerators.PropertyGenerator.class, property="clienteId")
     //@JsonIdentityReference(alwaysAsId = false)
     //@JsonProperty("cliente")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Agregar esta anotación
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "telefonos"}) // Agregar esta anotación
     private Cliente cliente;
+
 
     public Telefono(){
 

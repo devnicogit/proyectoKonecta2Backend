@@ -3,11 +3,14 @@ package com.tutorial.crud.security.jwt;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.JWTParser;
+import com.tutorial.crud.security.entity.Asesor;
 import com.tutorial.crud.security.entity.AsesorPrincipal;
 import com.tutorial.crud.security.entity.dto.JwtDto;
+import com.tutorial.crud.security.repository.AsesorRepository;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,10 +19,15 @@ import org.springframework.stereotype.Component;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class JwtProvider {
+
+    @Autowired
+    private AsesorRepository asesorRepository;
+
     private final static Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
     @Value("${jwt.secret}")
@@ -31,8 +39,10 @@ public class JwtProvider {
     public String generateToken(Authentication authentication) {
         AsesorPrincipal asesorPrincipal = (AsesorPrincipal) authentication.getPrincipal();
         List<String> roles = asesorPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
+        Optional<Asesor> asesor = asesorRepository.findByNombreUsuario(asesorPrincipal.getUsername());
         return Jwts.builder()
                 .setSubject(asesorPrincipal.getUsername())
+                .claim("id", asesor.get().getId())
                 .claim("roles", roles)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(new Date().getTime() + expiration * 180))
@@ -43,6 +53,7 @@ public class JwtProvider {
     public String getNombreUsuarioFromToken(String token) {
         return Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token).getBody().getSubject();
     }
+
 
     public boolean validateToken(String token) {
         try {
