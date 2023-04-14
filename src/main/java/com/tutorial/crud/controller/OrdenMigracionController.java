@@ -13,6 +13,7 @@ import com.tutorial.crud.swagger.entity.OrdenMigracion;
 import com.tutorial.crud.swagger.entity.PlanPostpago;
 import com.tutorial.crud.swagger.entity.Telefono;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +53,9 @@ public class OrdenMigracionController {
 
     @Autowired
     private DetalleOrdenMigracionService detalleOrdenMigracionService;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @ApiOperation("Muestra una lista de orden de migración")
     @GetMapping("/lista")
@@ -120,6 +132,40 @@ public class OrdenMigracionController {
         Long asesor = ordenMigracionDto.getAsesor();
         Long plan = ordenMigracionDto.getPlan();
         LocalDate fecha = ordenMigracionDto.getFecha();
+        String pdf = ordenMigracionDto.getPdf();
+        //String nombrepdf = ordenMigracionDto.getNombrepdf();
+
+
+        //Obtener la dataUrl del DTO y decodificarla para obtener los bytes del archivo
+        //byte[] archivoBytes = Base64.getDecoder().decode(ordenMigracionDto.getPdf().split(",")[1]);
+
+        //Obtener la ruta donde se va a guardar el archivo
+        //String nombreArchivo = ordenMigracionDto.getNombrepdf();
+        //String rutaArchivo = "src/main/resources/ordenes/" + nombreArchivo;
+
+        //Escribir los bytes del archivo en la ruta especificada
+        /*try {
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(rutaArchivo));
+            fileOutputStream.write(archivoBytes);
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }*/
+
+        // decodifica el PDF desde base64
+        //byte[] pdfBytes = Base64.getDecoder().decode(pdf.split(",")[1]);
+
+        // genera la ruta del archivo PDF en el servidor
+        //String rutaArchivo = "C:\\Users\\nicol\\Desktop\\BACKEND_PROYECTO\\src\\main\\resources\\ordenes\\" + nombrepdf;
+
+        // guarda el archivo PDF en el servidor
+       /*try {
+            Files.write(Paths.get(rutaArchivo), pdfBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }*/
 
         Optional<Telefono> telefonoOptional  = telefonoService.findByIds(telefono);
         if (!telefonoOptional.isPresent()) {
@@ -149,6 +195,8 @@ public class OrdenMigracionController {
         ordenMigracion.setAsesor(asesorOptional.get());
         ordenMigracion.setPlan(planOptional.get());
         ordenMigracion.setFecha(fecha);
+        ordenMigracion.setPdf(pdf);
+        //ordenMigracion.setNombrepdf(rutaArchivo);
 
         /*OrdenMigracion nuevaOrdenMigracion = ordenMigracionService.save(ordenMigracion);
         return ResponseEntity.ok(nuevaOrdenMigracion);*/

@@ -29,6 +29,10 @@ public class OrdenMigracionDto {
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
 
+    private String pdf;
+
+    //private String nombrepdf;
+
     public OrdenMigracionDto(){
 
     }
@@ -41,12 +45,16 @@ public class OrdenMigracionDto {
         this.fecha = fecha;
     }
 
+
+
     public OrdenMigracionDto(OrdenMigracion ordenMigracion) {
         this.id = ordenMigracion.getId();
         this.telefono = ordenMigracion.getTelefono().getId();
         this.asesor = ordenMigracion.getAsesor().getId();
         this.plan = ordenMigracion.getPlan().getPlanId();
         this.fecha = ordenMigracion.getFecha();
+        this.pdf = ordenMigracion.getPdf();
+        //this.nombrepdf = ordenMigracion.getNombrepdf();
     }
 
 
@@ -126,4 +134,20 @@ public class OrdenMigracionDto {
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
+
+    public String getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
+    }
+
+    /*public String getNombrepdf() {
+        return nombrepdf;
+    }
+
+    public void setNombrepdf(String nombrepdf) {
+        this.nombrepdf = nombrepdf;
+    }*/
 }

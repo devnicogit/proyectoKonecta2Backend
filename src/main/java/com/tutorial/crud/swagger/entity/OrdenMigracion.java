@@ -38,6 +38,12 @@ public class OrdenMigracion {
     @Column(name = "fecha")
     private LocalDate fecha;
 
+    @Column(name = "pdf")
+    private String pdf; // Nueva propiedad pdf
+
+    /*@Column(name = "nombrepdf")
+    private String nombrepdf;*/
+
     /*@OneToMany(mappedBy = "ordenMigracion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<DetalleOrdenMigracion> detallesOrdenMigracion;*/
@@ -66,6 +72,22 @@ public class OrdenMigracion {
         this.fecha = fecha;
     }
 
+    public OrdenMigracion(Telefono telefono, Asesor asesor, PlanPostpago plan, LocalDate fecha, String pdf) {
+        this.telefono = telefono;
+        this.asesor = asesor;
+        this.plan = plan;
+        this.fecha = fecha;
+        this.pdf = pdf;
+    }
+
+    /*public OrdenMigracion(Telefono telefono, Asesor asesor, PlanPostpago plan, LocalDate fecha, String pdf, String nombrepdf) {
+        this.telefono = telefono;
+        this.asesor = asesor;
+        this.plan = plan;
+        this.fecha = fecha;
+        this.pdf = pdf;
+        this.nombrepdf = nombrepdf;
+    }*/
 
     public Long getId() {
         return id;
@@ -107,4 +129,20 @@ public class OrdenMigracion {
     public void setTelefono(Telefono telefono) {
         this.telefono = telefono;
     }
+
+    public String getPdf() {
+        return pdf;
+    }
+
+    public void setPdf(String pdf) {
+        this.pdf = pdf;
+    }
+
+   /* public String getNombrepdf() {
+        return nombrepdf;
+    }
+
+    public void setNombrepdf(String nombrepdf) {
+        this.nombrepdf = nombrepdf;
+    }*/
 }
