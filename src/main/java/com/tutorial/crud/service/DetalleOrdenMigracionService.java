@@ -9,6 +9,8 @@ public interface DetalleOrdenMigracionService {
 
     List<DetalleOrdenMigracion> findAll();
 
+    DetalleOrdenMigracion findByCaracteristicasPlan(String caracteristicasPlan);
+
     DetalleOrdenMigracion findById(Long id);
 
     DetalleOrdenMigracion save(DetalleOrdenMigracion detalleOrdenMigracion);

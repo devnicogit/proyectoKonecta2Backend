@@ -1,43 +1,37 @@
-package com.tutorial.crud.swagger.entity;
+package com.tutorial.crud.dto;
 
-import javax.persistence.*;
+import com.tutorial.crud.swagger.entity.DetalleOrdenMigracion;
+import com.tutorial.crud.swagger.entity.OrdenMigracion;
 
-@Entity
-@Table(name = "detalle_orden_migracion")
-public class DetalleOrdenMigracion {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class DetalleOrdenMigracionDto {
+
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orden_migracion_id", nullable = false)
-    private OrdenMigracion ordenMigracion;
-
-    @Column(name = "caracteristicas_plan")
+    private Long ordenMigracion;
     private String caracteristicasPlan;
-
-    @Column(name = "detalles_asesor")
     private String detallesAsesor;
 
-    public DetalleOrdenMigracion(){}
+    public DetalleOrdenMigracionDto(){}
 
-    public DetalleOrdenMigracion(String caracteristicasPlan){
-        this.caracteristicasPlan = caracteristicasPlan;
-    }
-
-
-    public DetalleOrdenMigracion(Long id, OrdenMigracion ordenMigracion, String caracteristicasPlan, String detallesAsesor) {
+    public DetalleOrdenMigracionDto(Long id, Long ordenMigracion, String caracteristicasPlan, String detallesAsesor) {
         this.id = id;
         this.ordenMigracion = ordenMigracion;
         this.caracteristicasPlan = caracteristicasPlan;
         this.detallesAsesor = detallesAsesor;
     }
 
-    public DetalleOrdenMigracion(OrdenMigracion ordenMigracion, String caracteristicasPlan, String detallesAsesor) {
+    public DetalleOrdenMigracionDto(Long ordenMigracion, String caracteristicasPlan, String detallesAsesor) {
         this.ordenMigracion = ordenMigracion;
         this.caracteristicasPlan = caracteristicasPlan;
         this.detallesAsesor = detallesAsesor;
+    }
+
+    public DetalleOrdenMigracionDto(DetalleOrdenMigracion detalleOrdenMigracion) {
+        this.id = detalleOrdenMigracion.getId();
+        this.ordenMigracion = detalleOrdenMigracion.getOrdenMigracion().getId();
+        this.caracteristicasPlan = detalleOrdenMigracion.getCaracteristicasPlan();
+        this.detallesAsesor = detalleOrdenMigracion.getDetallesAsesor();
     }
 
     public Long getId() {
@@ -48,11 +42,11 @@ public class DetalleOrdenMigracion {
         this.id = id;
     }
 
-    public OrdenMigracion getOrdenMigracion() {
+    public Long getOrdenMigracion() {
         return ordenMigracion;
     }
 
-    public void setOrdenMigracion(OrdenMigracion ordenMigracion) {
+    public void setOrdenMigracion(Long ordenMigracion) {
         this.ordenMigracion = ordenMigracion;
     }
 

@@ -71,6 +71,20 @@ public class OrdenMigracionController {
         return new ResponseEntity<List<DetalleOrdenMigracion>>(list, HttpStatus.OK);
     }
 
+
+    /*GetMapping("/detalleOrdenMigracion/{caracteristicasPlan}")
+    public ResponseEntity<DetalleOrdenMigracion> getDetalleOrdenMigracionByCaracteristicasPlan(@PathVariable String caracteristicasPlan) {
+        DetalleOrdenMigracion detalleOrdenMigracion = detalleOrdenMigracionService.findByCaracteristicasPlan(caracteristicasPlan);
+
+        if (detalleOrdenMigracion == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        DetalleOrdenMigracion detalleOrdenMigracionDto = new DetalleOrdenMigracion(detalleOrdenMigracion);
+        return ResponseEntity.ok(detalleOrdenMigracionDto);
+    }*/
+
+
    /*@GetMapping("/lista")
     public ResponseEntity<List<OrdenMigracion>> list() {
         List<OrdenMigracion> list = ordenMigracionService.findAllWithTelefono();
@@ -133,6 +147,7 @@ public class OrdenMigracionController {
         Long plan = ordenMigracionDto.getPlan();
         LocalDate fecha = ordenMigracionDto.getFecha();
         String pdf = ordenMigracionDto.getPdf();
+        String caracteristicasPlan = ordenMigracionDto.getCaracteristica();
         //String nombrepdf = ordenMigracionDto.getNombrepdf();
 
 
@@ -206,7 +221,9 @@ public class OrdenMigracionController {
         DetalleOrdenMigracion nuevoDetalleOrdenMigracion = new DetalleOrdenMigracion();
         nuevoDetalleOrdenMigracion.setOrdenMigracion(nuevaOrdenMigracion);
 
-        nuevoDetalleOrdenMigracion.setCaracteristicasPlan("Características del plan");
+        nuevoDetalleOrdenMigracion.setCaracteristicasPlan(caracteristicasPlan);
+
+        //nuevoDetalleOrdenMigracion.setCaracteristicasPlan("Características del plan");
         System.out.println("Valor de detallesAsesor: " + asesorOptional.get().getNombreUsuario());
         nuevoDetalleOrdenMigracion.setDetallesAsesor(asesorOptional.get().getNombreUsuario());
         DetalleOrdenMigracion detalleGuardado = detalleOrdenMigracionService.save(nuevoDetalleOrdenMigracion);

@@ -19,6 +19,12 @@ public class DetalleOrdenMigracionImpl implements DetalleOrdenMigracionService{
     }
 
     @Override
+    public DetalleOrdenMigracion findByCaracteristicasPlan(String caracteristicasPlan) {
+        return detalleOrdenMigracionRepository.findByCaracteristicasPlan(caracteristicasPlan);
+    }
+
+
+    @Override
     public DetalleOrdenMigracion findById(Long id) {
         return detalleOrdenMigracionRepository.findById(id).orElse(null);
     }

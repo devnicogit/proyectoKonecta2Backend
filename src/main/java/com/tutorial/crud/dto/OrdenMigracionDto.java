@@ -31,6 +31,8 @@ public class OrdenMigracionDto {
 
     private String pdf;
 
+    private String caracteristica;
+
     //private String nombrepdf;
 
     public OrdenMigracionDto(){
@@ -54,7 +56,6 @@ public class OrdenMigracionDto {
         this.plan = ordenMigracion.getPlan().getPlanId();
         this.fecha = ordenMigracion.getFecha();
         this.pdf = ordenMigracion.getPdf();
-        //this.nombrepdf = ordenMigracion.getNombrepdf();
     }
 
 
@@ -150,4 +151,12 @@ public class OrdenMigracionDto {
     public void setNombrepdf(String nombrepdf) {
         this.nombrepdf = nombrepdf;
     }*/
+
+    public String getCaracteristica() {
+        return caracteristica;
+    }
+
+    public void setCaracteristica(String caracteristica) {
+        this.caracteristica = caracteristica;
+    }
 }
