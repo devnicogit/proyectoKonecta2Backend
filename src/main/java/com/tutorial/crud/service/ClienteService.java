@@ -5,11 +5,14 @@ import com.tutorial.crud.swagger.entity.Cliente;
 import com.tutorial.crud.swagger.entity.Telefono;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ClienteService {
     List<Cliente> findAll();
 
     Cliente findById(Long id);
+
+    Optional<Cliente> getByEmail(String email);
 
     Cliente save(Cliente cliente);
 

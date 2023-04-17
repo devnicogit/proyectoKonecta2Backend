@@ -33,6 +33,9 @@ public class Cliente implements Serializable {
     @Column(name = "direccion")
     private String direccion;
 
+    @Column(name = "email")
+    private String email;
+
     @ManyToMany
     @JoinTable(
             name = "cliente_tipo_cliente",
@@ -58,6 +61,14 @@ public class Cliente implements Serializable {
         this.direccion = direccion;
     }
 
+    public Cliente(String dni, String nombre, String apellido, String direccion, String email) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.email = email;
+    }
+
     public Cliente(Long clienteId, String dni, String nombre, String apellido, String direccion, Set<TipoCliente> tipoCliente) {
         this.clienteId = clienteId;
         this.dni = dni;
@@ -72,6 +83,15 @@ public class Cliente implements Serializable {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
+        this.tipoCliente = tipoCliente;
+    }
+
+    public Cliente(String dni, String nombre, String apellido, String direccion, String email, Set<TipoCliente> tipoCliente) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.email = email;
         this.tipoCliente = tipoCliente;
     }
 
@@ -132,29 +152,11 @@ public class Cliente implements Serializable {
         tipoCliente.getCliente().add(this);
     }
 
-    /*public String getTelefono() {
-        return telefono;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
-    public TipoCliente getTipoCliente() {
-        return tipoCliente;
-    }
-
-    public void setTipoCliente(TipoCliente tipoCliente) {
-        this.tipoCliente = tipoCliente;
-    }
-
-    public PlanPostpago getPlanPostpago() {
-        return planPostpago;
-    }
-
-    public void setPlanPostpago(PlanPostpago planPostpago) {
-        this.planPostpago = planPostpago;
-    }*/
-
-
 }

@@ -22,6 +22,8 @@ public class ClienteDto {
     @NotBlank
     private String direccion;
 
+    private String email;
+
 
     private Set<TipoClienteDto> tipoCliente = new HashSet<>();
     private Set<TipoCliente> tipoCliente1 = new HashSet<>();
@@ -40,6 +42,14 @@ public class ClienteDto {
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
+    }
+
+    public ClienteDto(String dni, String nombre, String apellido, String direccion, String email) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.email = email;
     }
 
     public Long getClienteId() {
@@ -104,5 +114,13 @@ public class ClienteDto {
 
     public void setTipoClienteIds(Set<Long> tipoClienteIds) {
         this.tipoClienteIds = tipoClienteIds;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

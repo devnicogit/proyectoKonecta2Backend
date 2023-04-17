@@ -7,6 +7,9 @@ public class EmailValuesDTO {
     private String userName;
     private String tokenPassword;
 
+    private String message;
+    private byte[] pdfBytes;
+
     public EmailValuesDTO() {
     }
 
@@ -16,6 +19,15 @@ public class EmailValuesDTO {
         this.subject = subject;
         this.userName = userName;
         this.tokenPassword = tokenPassword;
+    }
+
+    public EmailValuesDTO(String mailTo) {
+        this.mailTo = mailTo;
+    }
+
+    public EmailValuesDTO(String mailTo, byte[] pdfBytes) {
+        this.mailTo = mailTo;
+        this.pdfBytes = pdfBytes;
     }
 
     public String getMailFrom() {
@@ -56,5 +68,22 @@ public class EmailValuesDTO {
 
     public void setTokenPassword(String tokenPassword) {
         this.tokenPassword = tokenPassword;
+    }
+
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public byte[] getPdfBytes() {
+        return pdfBytes;
+    }
+
+    public void setPdfBytes(byte[] pdfBytes) {
+        this.pdfBytes = pdfBytes;
     }
 }

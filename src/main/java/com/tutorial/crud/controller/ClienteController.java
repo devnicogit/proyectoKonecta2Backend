@@ -60,7 +60,7 @@ public class ClienteController {
             return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
         }
 
-        Cliente cliente = new Cliente(clienteDto.getDni(),clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDireccion());
+        Cliente cliente = new Cliente(clienteDto.getDni(),clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDireccion(), clienteDto.getEmail());
         Set<TipoCliente> tiposCliente = new HashSet<>();
         for (Long tipoClienteId : clienteDto.getTipoClienteIds()) {
             TipoCliente tipoCliente = tipoClienteRepository.findById(tipoClienteId)
@@ -85,7 +85,7 @@ public class ClienteController {
             return new ResponseEntity(new Mensaje("Campos mal puestos"), HttpStatus.BAD_REQUEST);
         }
 
-        ClienteDto clienteDto1 = new ClienteDto(clienteDto.getDni(), clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDireccion());
+        ClienteDto clienteDto1 = new ClienteDto(clienteDto.getDni(), clienteDto.getNombre(), clienteDto.getApellido(), clienteDto.getDireccion(), clienteDto.getEmail());
         clienteDto1.setTipoClienteIds(clienteDto.getTipoClienteIds());
 
         clienteService.update(id, clienteDto1);

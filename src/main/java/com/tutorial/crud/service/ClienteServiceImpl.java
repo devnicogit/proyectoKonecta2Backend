@@ -64,6 +64,7 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setNombre(clienteDto.getNombre());
         cliente.setApellido(clienteDto.getApellido());
         cliente.setDireccion(clienteDto.getDireccion());
+        cliente.setEmail(clienteDto.getEmail());
 
         Set<TipoCliente> tiposCliente = new HashSet<>();
         for (Long tipoId : clienteDto.getTipoClienteIds()) {
@@ -120,6 +121,11 @@ public class ClienteServiceImpl implements ClienteService {
         if (!tiposCliente.equals(cliente.getTipoCliente()) && telefonoOriginal.getPlan() instanceof PlanPostpago) {
             updateClienteTipoCliente(cliente, tiposCliente);
         }
+    }
+
+    @Override
+    public Optional<Cliente> getByEmail(String email) {
+        return clienteRepository.findByEmail(email);
     }
 
     /*@Override
@@ -217,6 +223,7 @@ public class ClienteServiceImpl implements ClienteService {
             clienteEncontrado.setNombre(clienteDto.getNombre());
             clienteEncontrado.setApellido(clienteDto.getApellido());
             clienteEncontrado.setDireccion(clienteDto.getDireccion());
+            clienteEncontrado.setEmail(clienteDto.getEmail());
 
             // Actualizar los tipos de cliente asociados al cliente
             Set<TipoCliente> tiposCliente = new HashSet<>();
